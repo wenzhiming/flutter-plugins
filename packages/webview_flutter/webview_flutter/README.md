@@ -1,6 +1,6 @@
 # Flutter WebView Pro
 
-[![pub package](https://img.shields.io/badge/pub-v3.0.1+3-orange)](https://pub.dartlang.org/packages/flutter_webview_pro)
+[![pub package](https://img.shields.io/badge/pub-v3.0.4+1-orange)](https://pub.dartlang.org/packages/flutter_webview_pro)
 
 A Flutter plugin that provides a WebView widget.
 
@@ -29,7 +29,7 @@ Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  flutter_webview_pro: ^3.0.1+3
+  flutter_webview_pro: ^3.0.4+1
 ```
 
 ### 2.Import
@@ -151,4 +151,4 @@ follow the steps described in the [Enabling Material Components instructions](ht
 ### Setting custom headers on POST requests
 
 Currently, setting custom headers when making a post request with the WebViewController's `loadRequest` method is not supported on Android.
-If you require this functionality, a workaround is to make the request manually, and then load the response data using `loadHTMLString` instead. 
+If you require this functionality, a workaround is to make the request manually, and then load the response data using `loadHTMLString` instead.

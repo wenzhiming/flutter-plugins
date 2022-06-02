@@ -1,3 +1,14 @@
+
+## 1.9.0
+
+* Adds the first iteration of the v4 webview_flutter interface implementation.
+* Removes unnecessary imports.
+
+## 1.8.2
+
+* Migrates from `ui.hash*` to `Object.hash*`.
+* Updates minimum Flutter version to 2.5.0.
+
 ## 1.8.1+2
 
 * fix flutter analyze issues
