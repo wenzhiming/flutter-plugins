@@ -2,7 +2,7 @@ name: flutter_webview_pro
 description: A Flutter plugin that provides a WebView widget who Support photo upload/take camera and Geolocation.
 repository: https://github.com/wenzhiming/flutter-plugins/tree/dev/packages/webview_flutter/webview_flutter
 issue_tracker: https://github.com/wenzhiming/flutter-plugins/issues
-version: 3.0.4+1
+version: 3.0.4
 
 
 environment:
