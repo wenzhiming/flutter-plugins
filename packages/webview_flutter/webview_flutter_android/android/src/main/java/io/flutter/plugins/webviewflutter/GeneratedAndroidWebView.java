@@ -256,9 +256,9 @@ public class GeneratedAndroidWebView {
       WebResourceErrorData pigeonResult = new WebResourceErrorData();
       Object errorCode = map.get("errorCode");
       pigeonResult.setErrorCode(
-          (errorCode == null)
-              ? null
-              : ((errorCode instanceof Integer) ? (Integer) errorCode : (Long) errorCode));
+              (errorCode == null)
+                      ? null
+                      : ((errorCode instanceof Integer) ? (Integer) errorCode : (Long) errorCode));
       Object description = map.get("description");
       pigeonResult.setDescription((String) description);
       return pigeonResult;
@@ -295,63 +295,63 @@ public class GeneratedAndroidWebView {
     static void setup(BinaryMessenger binaryMessenger, CookieManagerHostApi api) {
       {
         BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger,
-                "dev.flutter.pigeon.CookieManagerHostApi.clearCookies",
-                getCodec());
+                new BasicMessageChannel<>(
+                        binaryMessenger,
+                        "dev.flutter.pigeon.CookieManagerHostApi.clearCookies",
+                        getCodec());
         if (api != null) {
           channel.setMessageHandler(
-              (message, reply) -> {
-                Map<String, Object> wrapped = new HashMap<>();
-                try {
-                  Result<Boolean> resultCallback =
-                      new Result<Boolean>() {
-                        public void success(Boolean result) {
-                          wrapped.put("result", result);
-                          reply.reply(wrapped);
-                        }
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      Result<Boolean> resultCallback =
+                              new Result<Boolean>() {
+                                public void success(Boolean result) {
+                                  wrapped.put("result", result);
+                                  reply.reply(wrapped);
+                                }
 
-                        public void error(Throwable error) {
-                          wrapped.put("error", wrapError(error));
-                          reply.reply(wrapped);
-                        }
-                      };
+                                public void error(Throwable error) {
+                                  wrapped.put("error", wrapError(error));
+                                  reply.reply(wrapped);
+                                }
+                              };
 
-                  api.clearCookies(resultCallback);
-                } catch (Error | RuntimeException exception) {
-                  wrapped.put("error", wrapError(exception));
-                  reply.reply(wrapped);
-                }
-              });
+                      api.clearCookies(resultCallback);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                      reply.reply(wrapped);
+                    }
+                  });
         } else {
           channel.setMessageHandler(null);
         }
       }
       {
         BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger, "dev.flutter.pigeon.CookieManagerHostApi.setCookie", getCodec());
+                new BasicMessageChannel<>(
+                        binaryMessenger, "dev.flutter.pigeon.CookieManagerHostApi.setCookie", getCodec());
         if (api != null) {
           channel.setMessageHandler(
-              (message, reply) -> {
-                Map<String, Object> wrapped = new HashMap<>();
-                try {
-                  ArrayList<Object> args = (ArrayList<Object>) message;
-                  String urlArg = (String) args.get(0);
-                  if (urlArg == null) {
-                    throw new NullPointerException("urlArg unexpectedly null.");
-                  }
-                  String valueArg = (String) args.get(1);
-                  if (valueArg == null) {
-                    throw new NullPointerException("valueArg unexpectedly null.");
-                  }
-                  api.setCookie(urlArg, valueArg);
-                  wrapped.put("result", null);
-                } catch (Error | RuntimeException exception) {
-                  wrapped.put("error", wrapError(exception));
-                }
-                reply.reply(wrapped);
-              });
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      ArrayList<Object> args = (ArrayList<Object>) message;
+                      String urlArg = (String) args.get(0);
+                      if (urlArg == null) {
+                        throw new NullPointerException("urlArg unexpectedly null.");
+                      }
+                      String valueArg = (String) args.get(1);
+                      if (valueArg == null) {
+                        throw new NullPointerException("valueArg unexpectedly null.");
+                      }
+                      api.setCookie(urlArg, valueArg);
+                      wrapped.put("result", null);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                    }
+                    reply.reply(wrapped);
+                  });
         } else {
           channel.setMessageHandler(null);
         }
@@ -372,21 +372,21 @@ public class GeneratedAndroidWebView {
     void dispose(@NonNull Long instanceId);
 
     void loadData(
-        @NonNull Long instanceId,
-        @NonNull String data,
-        @Nullable String mimeType,
-        @Nullable String encoding);
+            @NonNull Long instanceId,
+            @NonNull String data,
+            @Nullable String mimeType,
+            @Nullable String encoding);
 
     void loadDataWithBaseUrl(
-        @NonNull Long instanceId,
-        @Nullable String baseUrl,
-        @NonNull String data,
-        @Nullable String mimeType,
-        @Nullable String encoding,
-        @Nullable String historyUrl);
+            @NonNull Long instanceId,
+            @Nullable String baseUrl,
+            @NonNull String data,
+            @Nullable String mimeType,
+            @Nullable String encoding,
+            @Nullable String historyUrl);
 
     void loadUrl(
-        @NonNull Long instanceId, @NonNull String url, @NonNull Map<String, String> headers);
+            @NonNull Long instanceId, @NonNull String url, @NonNull Map<String, String> headers);
 
     void postUrl(@NonNull Long instanceId, @NonNull String url, @NonNull byte[] data);
 
@@ -408,7 +408,7 @@ public class GeneratedAndroidWebView {
     void clearCache(@NonNull Long instanceId, @NonNull Boolean includeDiskFiles);
 
     void evaluateJavascript(
-        @NonNull Long instanceId, @NonNull String javascriptString, Result<String> result);
+            @NonNull Long instanceId, @NonNull String javascriptString, Result<String> result);
 
     @Nullable
     String getTitle(@NonNull Long instanceId);
@@ -430,7 +430,7 @@ public class GeneratedAndroidWebView {
     void addJavaScriptChannel(@NonNull Long instanceId, @NonNull Long javaScriptChannelInstanceId);
 
     void removeJavaScriptChannel(
-        @NonNull Long instanceId, @NonNull Long javaScriptChannelInstanceId);
+            @NonNull Long instanceId, @NonNull Long javaScriptChannelInstanceId);
 
     void setDownloadListener(@NonNull Long instanceId, @Nullable Long listenerInstanceId);
 
@@ -447,807 +447,807 @@ public class GeneratedAndroidWebView {
     static void setup(BinaryMessenger binaryMessenger, WebViewHostApi api) {
       {
         BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger, "dev.flutter.pigeon.WebViewHostApi.create", getCodec());
+                new BasicMessageChannel<>(
+                        binaryMessenger, "dev.flutter.pigeon.WebViewHostApi.create", getCodec());
         if (api != null) {
           channel.setMessageHandler(
-              (message, reply) -> {
-                Map<String, Object> wrapped = new HashMap<>();
-                try {
-                  ArrayList<Object> args = (ArrayList<Object>) message;
-                  Number instanceIdArg = (Number) args.get(0);
-                  if (instanceIdArg == null) {
-                    throw new NullPointerException("instanceIdArg unexpectedly null.");
-                  }
-                  Boolean useHybridCompositionArg = (Boolean) args.get(1);
-                  if (useHybridCompositionArg == null) {
-                    throw new NullPointerException("useHybridCompositionArg unexpectedly null.");
-                  }
-                  api.create(
-                      (instanceIdArg == null) ? null : instanceIdArg.longValue(),
-                      useHybridCompositionArg);
-                  wrapped.put("result", null);
-                } catch (Error | RuntimeException exception) {
-                  wrapped.put("error", wrapError(exception));
-                }
-                reply.reply(wrapped);
-              });
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      ArrayList<Object> args = (ArrayList<Object>) message;
+                      Number instanceIdArg = (Number) args.get(0);
+                      if (instanceIdArg == null) {
+                        throw new NullPointerException("instanceIdArg unexpectedly null.");
+                      }
+                      Boolean useHybridCompositionArg = (Boolean) args.get(1);
+                      if (useHybridCompositionArg == null) {
+                        throw new NullPointerException("useHybridCompositionArg unexpectedly null.");
+                      }
+                      api.create(
+                              (instanceIdArg == null) ? null : instanceIdArg.longValue(),
+                              useHybridCompositionArg);
+                      wrapped.put("result", null);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                    }
+                    reply.reply(wrapped);
+                  });
         } else {
           channel.setMessageHandler(null);
         }
       }
       {
         BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger, "dev.flutter.pigeon.WebViewHostApi.dispose", getCodec());
+                new BasicMessageChannel<>(
+                        binaryMessenger, "dev.flutter.pigeon.WebViewHostApi.dispose", getCodec());
         if (api != null) {
           channel.setMessageHandler(
-              (message, reply) -> {
-                Map<String, Object> wrapped = new HashMap<>();
-                try {
-                  ArrayList<Object> args = (ArrayList<Object>) message;
-                  Number instanceIdArg = (Number) args.get(0);
-                  if (instanceIdArg == null) {
-                    throw new NullPointerException("instanceIdArg unexpectedly null.");
-                  }
-                  api.dispose((instanceIdArg == null) ? null : instanceIdArg.longValue());
-                  wrapped.put("result", null);
-                } catch (Error | RuntimeException exception) {
-                  wrapped.put("error", wrapError(exception));
-                }
-                reply.reply(wrapped);
-              });
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      ArrayList<Object> args = (ArrayList<Object>) message;
+                      Number instanceIdArg = (Number) args.get(0);
+                      if (instanceIdArg == null) {
+                        throw new NullPointerException("instanceIdArg unexpectedly null.");
+                      }
+                      api.dispose((instanceIdArg == null) ? null : instanceIdArg.longValue());
+                      wrapped.put("result", null);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                    }
+                    reply.reply(wrapped);
+                  });
         } else {
           channel.setMessageHandler(null);
         }
       }
       {
         BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger, "dev.flutter.pigeon.WebViewHostApi.loadData", getCodec());
+                new BasicMessageChannel<>(
+                        binaryMessenger, "dev.flutter.pigeon.WebViewHostApi.loadData", getCodec());
         if (api != null) {
           channel.setMessageHandler(
-              (message, reply) -> {
-                Map<String, Object> wrapped = new HashMap<>();
-                try {
-                  ArrayList<Object> args = (ArrayList<Object>) message;
-                  Number instanceIdArg = (Number) args.get(0);
-                  if (instanceIdArg == null) {
-                    throw new NullPointerException("instanceIdArg unexpectedly null.");
-                  }
-                  String dataArg = (String) args.get(1);
-                  if (dataArg == null) {
-                    throw new NullPointerException("dataArg unexpectedly null.");
-                  }
-                  String mimeTypeArg = (String) args.get(2);
-                  String encodingArg = (String) args.get(3);
-                  api.loadData(
-                      (instanceIdArg == null) ? null : instanceIdArg.longValue(),
-                      dataArg,
-                      mimeTypeArg,
-                      encodingArg);
-                  wrapped.put("result", null);
-                } catch (Error | RuntimeException exception) {
-                  wrapped.put("error", wrapError(exception));
-                }
-                reply.reply(wrapped);
-              });
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      ArrayList<Object> args = (ArrayList<Object>) message;
+                      Number instanceIdArg = (Number) args.get(0);
+                      if (instanceIdArg == null) {
+                        throw new NullPointerException("instanceIdArg unexpectedly null.");
+                      }
+                      String dataArg = (String) args.get(1);
+                      if (dataArg == null) {
+                        throw new NullPointerException("dataArg unexpectedly null.");
+                      }
+                      String mimeTypeArg = (String) args.get(2);
+                      String encodingArg = (String) args.get(3);
+                      api.loadData(
+                              (instanceIdArg == null) ? null : instanceIdArg.longValue(),
+                              dataArg,
+                              mimeTypeArg,
+                              encodingArg);
+                      wrapped.put("result", null);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                    }
+                    reply.reply(wrapped);
+                  });
         } else {
           channel.setMessageHandler(null);
         }
       }
       {
         BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger,
-                "dev.flutter.pigeon.WebViewHostApi.loadDataWithBaseUrl",
-                getCodec());
+                new BasicMessageChannel<>(
+                        binaryMessenger,
+                        "dev.flutter.pigeon.WebViewHostApi.loadDataWithBaseUrl",
+                        getCodec());
         if (api != null) {
           channel.setMessageHandler(
-              (message, reply) -> {
-                Map<String, Object> wrapped = new HashMap<>();
-                try {
-                  ArrayList<Object> args = (ArrayList<Object>) message;
-                  Number instanceIdArg = (Number) args.get(0);
-                  if (instanceIdArg == null) {
-                    throw new NullPointerException("instanceIdArg unexpectedly null.");
-                  }
-                  String baseUrlArg = (String) args.get(1);
-                  String dataArg = (String) args.get(2);
-                  if (dataArg == null) {
-                    throw new NullPointerException("dataArg unexpectedly null.");
-                  }
-                  String mimeTypeArg = (String) args.get(3);
-                  String encodingArg = (String) args.get(4);
-                  String historyUrlArg = (String) args.get(5);
-                  api.loadDataWithBaseUrl(
-                      (instanceIdArg == null) ? null : instanceIdArg.longValue(),
-                      baseUrlArg,
-                      dataArg,
-                      mimeTypeArg,
-                      encodingArg,
-                      historyUrlArg);
-                  wrapped.put("result", null);
-                } catch (Error | RuntimeException exception) {
-                  wrapped.put("error", wrapError(exception));
-                }
-                reply.reply(wrapped);
-              });
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      ArrayList<Object> args = (ArrayList<Object>) message;
+                      Number instanceIdArg = (Number) args.get(0);
+                      if (instanceIdArg == null) {
+                        throw new NullPointerException("instanceIdArg unexpectedly null.");
+                      }
+                      String baseUrlArg = (String) args.get(1);
+                      String dataArg = (String) args.get(2);
+                      if (dataArg == null) {
+                        throw new NullPointerException("dataArg unexpectedly null.");
+                      }
+                      String mimeTypeArg = (String) args.get(3);
+                      String encodingArg = (String) args.get(4);
+                      String historyUrlArg = (String) args.get(5);
+                      api.loadDataWithBaseUrl(
+                              (instanceIdArg == null) ? null : instanceIdArg.longValue(),
+                              baseUrlArg,
+                              dataArg,
+                              mimeTypeArg,
+                              encodingArg,
+                              historyUrlArg);
+                      wrapped.put("result", null);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                    }
+                    reply.reply(wrapped);
+                  });
         } else {
           channel.setMessageHandler(null);
         }
       }
       {
         BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger, "dev.flutter.pigeon.WebViewHostApi.loadUrl", getCodec());
+                new BasicMessageChannel<>(
+                        binaryMessenger, "dev.flutter.pigeon.WebViewHostApi.loadUrl", getCodec());
         if (api != null) {
           channel.setMessageHandler(
-              (message, reply) -> {
-                Map<String, Object> wrapped = new HashMap<>();
-                try {
-                  ArrayList<Object> args = (ArrayList<Object>) message;
-                  Number instanceIdArg = (Number) args.get(0);
-                  if (instanceIdArg == null) {
-                    throw new NullPointerException("instanceIdArg unexpectedly null.");
-                  }
-                  String urlArg = (String) args.get(1);
-                  if (urlArg == null) {
-                    throw new NullPointerException("urlArg unexpectedly null.");
-                  }
-                  Map<String, String> headersArg = (Map<String, String>) args.get(2);
-                  if (headersArg == null) {
-                    throw new NullPointerException("headersArg unexpectedly null.");
-                  }
-                  api.loadUrl(
-                      (instanceIdArg == null) ? null : instanceIdArg.longValue(),
-                      urlArg,
-                      headersArg);
-                  wrapped.put("result", null);
-                } catch (Error | RuntimeException exception) {
-                  wrapped.put("error", wrapError(exception));
-                }
-                reply.reply(wrapped);
-              });
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      ArrayList<Object> args = (ArrayList<Object>) message;
+                      Number instanceIdArg = (Number) args.get(0);
+                      if (instanceIdArg == null) {
+                        throw new NullPointerException("instanceIdArg unexpectedly null.");
+                      }
+                      String urlArg = (String) args.get(1);
+                      if (urlArg == null) {
+                        throw new NullPointerException("urlArg unexpectedly null.");
+                      }
+                      Map<String, String> headersArg = (Map<String, String>) args.get(2);
+                      if (headersArg == null) {
+                        throw new NullPointerException("headersArg unexpectedly null.");
+                      }
+                      api.loadUrl(
+                              (instanceIdArg == null) ? null : instanceIdArg.longValue(),
+                              urlArg,
+                              headersArg);
+                      wrapped.put("result", null);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                    }
+                    reply.reply(wrapped);
+                  });
         } else {
           channel.setMessageHandler(null);
         }
       }
       {
         BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger, "dev.flutter.pigeon.WebViewHostApi.postUrl", getCodec());
+                new BasicMessageChannel<>(
+                        binaryMessenger, "dev.flutter.pigeon.WebViewHostApi.postUrl", getCodec());
         if (api != null) {
           channel.setMessageHandler(
-              (message, reply) -> {
-                Map<String, Object> wrapped = new HashMap<>();
-                try {
-                  ArrayList<Object> args = (ArrayList<Object>) message;
-                  Number instanceIdArg = (Number) args.get(0);
-                  if (instanceIdArg == null) {
-                    throw new NullPointerException("instanceIdArg unexpectedly null.");
-                  }
-                  String urlArg = (String) args.get(1);
-                  if (urlArg == null) {
-                    throw new NullPointerException("urlArg unexpectedly null.");
-                  }
-                  byte[] dataArg = (byte[]) args.get(2);
-                  if (dataArg == null) {
-                    throw new NullPointerException("dataArg unexpectedly null.");
-                  }
-                  api.postUrl(
-                      (instanceIdArg == null) ? null : instanceIdArg.longValue(), urlArg, dataArg);
-                  wrapped.put("result", null);
-                } catch (Error | RuntimeException exception) {
-                  wrapped.put("error", wrapError(exception));
-                }
-                reply.reply(wrapped);
-              });
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      ArrayList<Object> args = (ArrayList<Object>) message;
+                      Number instanceIdArg = (Number) args.get(0);
+                      if (instanceIdArg == null) {
+                        throw new NullPointerException("instanceIdArg unexpectedly null.");
+                      }
+                      String urlArg = (String) args.get(1);
+                      if (urlArg == null) {
+                        throw new NullPointerException("urlArg unexpectedly null.");
+                      }
+                      byte[] dataArg = (byte[]) args.get(2);
+                      if (dataArg == null) {
+                        throw new NullPointerException("dataArg unexpectedly null.");
+                      }
+                      api.postUrl(
+                              (instanceIdArg == null) ? null : instanceIdArg.longValue(), urlArg, dataArg);
+                      wrapped.put("result", null);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                    }
+                    reply.reply(wrapped);
+                  });
         } else {
           channel.setMessageHandler(null);
         }
       }
       {
         BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger, "dev.flutter.pigeon.WebViewHostApi.getUrl", getCodec());
+                new BasicMessageChannel<>(
+                        binaryMessenger, "dev.flutter.pigeon.WebViewHostApi.getUrl", getCodec());
         if (api != null) {
           channel.setMessageHandler(
-              (message, reply) -> {
-                Map<String, Object> wrapped = new HashMap<>();
-                try {
-                  ArrayList<Object> args = (ArrayList<Object>) message;
-                  Number instanceIdArg = (Number) args.get(0);
-                  if (instanceIdArg == null) {
-                    throw new NullPointerException("instanceIdArg unexpectedly null.");
-                  }
-                  String output =
-                      api.getUrl((instanceIdArg == null) ? null : instanceIdArg.longValue());
-                  wrapped.put("result", output);
-                } catch (Error | RuntimeException exception) {
-                  wrapped.put("error", wrapError(exception));
-                }
-                reply.reply(wrapped);
-              });
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      ArrayList<Object> args = (ArrayList<Object>) message;
+                      Number instanceIdArg = (Number) args.get(0);
+                      if (instanceIdArg == null) {
+                        throw new NullPointerException("instanceIdArg unexpectedly null.");
+                      }
+                      String output =
+                              api.getUrl((instanceIdArg == null) ? null : instanceIdArg.longValue());
+                      wrapped.put("result", output);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                    }
+                    reply.reply(wrapped);
+                  });
         } else {
           channel.setMessageHandler(null);
         }
       }
       {
         BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger, "dev.flutter.pigeon.WebViewHostApi.canGoBack", getCodec());
+                new BasicMessageChannel<>(
+                        binaryMessenger, "dev.flutter.pigeon.WebViewHostApi.canGoBack", getCodec());
         if (api != null) {
           channel.setMessageHandler(
-              (message, reply) -> {
-                Map<String, Object> wrapped = new HashMap<>();
-                try {
-                  ArrayList<Object> args = (ArrayList<Object>) message;
-                  Number instanceIdArg = (Number) args.get(0);
-                  if (instanceIdArg == null) {
-                    throw new NullPointerException("instanceIdArg unexpectedly null.");
-                  }
-                  Boolean output =
-                      api.canGoBack((instanceIdArg == null) ? null : instanceIdArg.longValue());
-                  wrapped.put("result", output);
-                } catch (Error | RuntimeException exception) {
-                  wrapped.put("error", wrapError(exception));
-                }
-                reply.reply(wrapped);
-              });
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      ArrayList<Object> args = (ArrayList<Object>) message;
+                      Number instanceIdArg = (Number) args.get(0);
+                      if (instanceIdArg == null) {
+                        throw new NullPointerException("instanceIdArg unexpectedly null.");
+                      }
+                      Boolean output =
+                              api.canGoBack((instanceIdArg == null) ? null : instanceIdArg.longValue());
+                      wrapped.put("result", output);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                    }
+                    reply.reply(wrapped);
+                  });
         } else {
           channel.setMessageHandler(null);
         }
       }
       {
         BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger, "dev.flutter.pigeon.WebViewHostApi.canGoForward", getCodec());
+                new BasicMessageChannel<>(
+                        binaryMessenger, "dev.flutter.pigeon.WebViewHostApi.canGoForward", getCodec());
         if (api != null) {
           channel.setMessageHandler(
-              (message, reply) -> {
-                Map<String, Object> wrapped = new HashMap<>();
-                try {
-                  ArrayList<Object> args = (ArrayList<Object>) message;
-                  Number instanceIdArg = (Number) args.get(0);
-                  if (instanceIdArg == null) {
-                    throw new NullPointerException("instanceIdArg unexpectedly null.");
-                  }
-                  Boolean output =
-                      api.canGoForward((instanceIdArg == null) ? null : instanceIdArg.longValue());
-                  wrapped.put("result", output);
-                } catch (Error | RuntimeException exception) {
-                  wrapped.put("error", wrapError(exception));
-                }
-                reply.reply(wrapped);
-              });
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      ArrayList<Object> args = (ArrayList<Object>) message;
+                      Number instanceIdArg = (Number) args.get(0);
+                      if (instanceIdArg == null) {
+                        throw new NullPointerException("instanceIdArg unexpectedly null.");
+                      }
+                      Boolean output =
+                              api.canGoForward((instanceIdArg == null) ? null : instanceIdArg.longValue());
+                      wrapped.put("result", output);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                    }
+                    reply.reply(wrapped);
+                  });
         } else {
           channel.setMessageHandler(null);
         }
       }
       {
         BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger, "dev.flutter.pigeon.WebViewHostApi.goBack", getCodec());
+                new BasicMessageChannel<>(
+                        binaryMessenger, "dev.flutter.pigeon.WebViewHostApi.goBack", getCodec());
         if (api != null) {
           channel.setMessageHandler(
-              (message, reply) -> {
-                Map<String, Object> wrapped = new HashMap<>();
-                try {
-                  ArrayList<Object> args = (ArrayList<Object>) message;
-                  Number instanceIdArg = (Number) args.get(0);
-                  if (instanceIdArg == null) {
-                    throw new NullPointerException("instanceIdArg unexpectedly null.");
-                  }
-                  api.goBack((instanceIdArg == null) ? null : instanceIdArg.longValue());
-                  wrapped.put("result", null);
-                } catch (Error | RuntimeException exception) {
-                  wrapped.put("error", wrapError(exception));
-                }
-                reply.reply(wrapped);
-              });
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      ArrayList<Object> args = (ArrayList<Object>) message;
+                      Number instanceIdArg = (Number) args.get(0);
+                      if (instanceIdArg == null) {
+                        throw new NullPointerException("instanceIdArg unexpectedly null.");
+                      }
+                      api.goBack((instanceIdArg == null) ? null : instanceIdArg.longValue());
+                      wrapped.put("result", null);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                    }
+                    reply.reply(wrapped);
+                  });
         } else {
           channel.setMessageHandler(null);
         }
       }
       {
         BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger, "dev.flutter.pigeon.WebViewHostApi.goForward", getCodec());
+                new BasicMessageChannel<>(
+                        binaryMessenger, "dev.flutter.pigeon.WebViewHostApi.goForward", getCodec());
         if (api != null) {
           channel.setMessageHandler(
-              (message, reply) -> {
-                Map<String, Object> wrapped = new HashMap<>();
-                try {
-                  ArrayList<Object> args = (ArrayList<Object>) message;
-                  Number instanceIdArg = (Number) args.get(0);
-                  if (instanceIdArg == null) {
-                    throw new NullPointerException("instanceIdArg unexpectedly null.");
-                  }
-                  api.goForward((instanceIdArg == null) ? null : instanceIdArg.longValue());
-                  wrapped.put("result", null);
-                } catch (Error | RuntimeException exception) {
-                  wrapped.put("error", wrapError(exception));
-                }
-                reply.reply(wrapped);
-              });
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      ArrayList<Object> args = (ArrayList<Object>) message;
+                      Number instanceIdArg = (Number) args.get(0);
+                      if (instanceIdArg == null) {
+                        throw new NullPointerException("instanceIdArg unexpectedly null.");
+                      }
+                      api.goForward((instanceIdArg == null) ? null : instanceIdArg.longValue());
+                      wrapped.put("result", null);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                    }
+                    reply.reply(wrapped);
+                  });
         } else {
           channel.setMessageHandler(null);
         }
       }
       {
         BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger, "dev.flutter.pigeon.WebViewHostApi.reload", getCodec());
+                new BasicMessageChannel<>(
+                        binaryMessenger, "dev.flutter.pigeon.WebViewHostApi.reload", getCodec());
         if (api != null) {
           channel.setMessageHandler(
-              (message, reply) -> {
-                Map<String, Object> wrapped = new HashMap<>();
-                try {
-                  ArrayList<Object> args = (ArrayList<Object>) message;
-                  Number instanceIdArg = (Number) args.get(0);
-                  if (instanceIdArg == null) {
-                    throw new NullPointerException("instanceIdArg unexpectedly null.");
-                  }
-                  api.reload((instanceIdArg == null) ? null : instanceIdArg.longValue());
-                  wrapped.put("result", null);
-                } catch (Error | RuntimeException exception) {
-                  wrapped.put("error", wrapError(exception));
-                }
-                reply.reply(wrapped);
-              });
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      ArrayList<Object> args = (ArrayList<Object>) message;
+                      Number instanceIdArg = (Number) args.get(0);
+                      if (instanceIdArg == null) {
+                        throw new NullPointerException("instanceIdArg unexpectedly null.");
+                      }
+                      api.reload((instanceIdArg == null) ? null : instanceIdArg.longValue());
+                      wrapped.put("result", null);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                    }
+                    reply.reply(wrapped);
+                  });
         } else {
           channel.setMessageHandler(null);
         }
       }
       {
         BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger, "dev.flutter.pigeon.WebViewHostApi.clearCache", getCodec());
+                new BasicMessageChannel<>(
+                        binaryMessenger, "dev.flutter.pigeon.WebViewHostApi.clearCache", getCodec());
         if (api != null) {
           channel.setMessageHandler(
-              (message, reply) -> {
-                Map<String, Object> wrapped = new HashMap<>();
-                try {
-                  ArrayList<Object> args = (ArrayList<Object>) message;
-                  Number instanceIdArg = (Number) args.get(0);
-                  if (instanceIdArg == null) {
-                    throw new NullPointerException("instanceIdArg unexpectedly null.");
-                  }
-                  Boolean includeDiskFilesArg = (Boolean) args.get(1);
-                  if (includeDiskFilesArg == null) {
-                    throw new NullPointerException("includeDiskFilesArg unexpectedly null.");
-                  }
-                  api.clearCache(
-                      (instanceIdArg == null) ? null : instanceIdArg.longValue(),
-                      includeDiskFilesArg);
-                  wrapped.put("result", null);
-                } catch (Error | RuntimeException exception) {
-                  wrapped.put("error", wrapError(exception));
-                }
-                reply.reply(wrapped);
-              });
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      ArrayList<Object> args = (ArrayList<Object>) message;
+                      Number instanceIdArg = (Number) args.get(0);
+                      if (instanceIdArg == null) {
+                        throw new NullPointerException("instanceIdArg unexpectedly null.");
+                      }
+                      Boolean includeDiskFilesArg = (Boolean) args.get(1);
+                      if (includeDiskFilesArg == null) {
+                        throw new NullPointerException("includeDiskFilesArg unexpectedly null.");
+                      }
+                      api.clearCache(
+                              (instanceIdArg == null) ? null : instanceIdArg.longValue(),
+                              includeDiskFilesArg);
+                      wrapped.put("result", null);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                    }
+                    reply.reply(wrapped);
+                  });
         } else {
           channel.setMessageHandler(null);
         }
       }
       {
         BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger,
-                "dev.flutter.pigeon.WebViewHostApi.evaluateJavascript",
-                getCodec());
+                new BasicMessageChannel<>(
+                        binaryMessenger,
+                        "dev.flutter.pigeon.WebViewHostApi.evaluateJavascript",
+                        getCodec());
         if (api != null) {
           channel.setMessageHandler(
-              (message, reply) -> {
-                Map<String, Object> wrapped = new HashMap<>();
-                try {
-                  ArrayList<Object> args = (ArrayList<Object>) message;
-                  Number instanceIdArg = (Number) args.get(0);
-                  if (instanceIdArg == null) {
-                    throw new NullPointerException("instanceIdArg unexpectedly null.");
-                  }
-                  String javascriptStringArg = (String) args.get(1);
-                  if (javascriptStringArg == null) {
-                    throw new NullPointerException("javascriptStringArg unexpectedly null.");
-                  }
-                  Result<String> resultCallback =
-                      new Result<String>() {
-                        public void success(String result) {
-                          wrapped.put("result", result);
-                          reply.reply(wrapped);
-                        }
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      ArrayList<Object> args = (ArrayList<Object>) message;
+                      Number instanceIdArg = (Number) args.get(0);
+                      if (instanceIdArg == null) {
+                        throw new NullPointerException("instanceIdArg unexpectedly null.");
+                      }
+                      String javascriptStringArg = (String) args.get(1);
+                      if (javascriptStringArg == null) {
+                        throw new NullPointerException("javascriptStringArg unexpectedly null.");
+                      }
+                      Result<String> resultCallback =
+                              new Result<String>() {
+                                public void success(String result) {
+                                  wrapped.put("result", result);
+                                  reply.reply(wrapped);
+                                }
 
-                        public void error(Throwable error) {
-                          wrapped.put("error", wrapError(error));
-                          reply.reply(wrapped);
-                        }
-                      };
+                                public void error(Throwable error) {
+                                  wrapped.put("error", wrapError(error));
+                                  reply.reply(wrapped);
+                                }
+                              };
 
-                  api.evaluateJavascript(
-                      (instanceIdArg == null) ? null : instanceIdArg.longValue(),
-                      javascriptStringArg,
-                      resultCallback);
-                } catch (Error | RuntimeException exception) {
-                  wrapped.put("error", wrapError(exception));
-                  reply.reply(wrapped);
-                }
-              });
+                      api.evaluateJavascript(
+                              (instanceIdArg == null) ? null : instanceIdArg.longValue(),
+                              javascriptStringArg,
+                              resultCallback);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                      reply.reply(wrapped);
+                    }
+                  });
         } else {
           channel.setMessageHandler(null);
         }
       }
       {
         BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger, "dev.flutter.pigeon.WebViewHostApi.getTitle", getCodec());
+                new BasicMessageChannel<>(
+                        binaryMessenger, "dev.flutter.pigeon.WebViewHostApi.getTitle", getCodec());
         if (api != null) {
           channel.setMessageHandler(
-              (message, reply) -> {
-                Map<String, Object> wrapped = new HashMap<>();
-                try {
-                  ArrayList<Object> args = (ArrayList<Object>) message;
-                  Number instanceIdArg = (Number) args.get(0);
-                  if (instanceIdArg == null) {
-                    throw new NullPointerException("instanceIdArg unexpectedly null.");
-                  }
-                  String output =
-                      api.getTitle((instanceIdArg == null) ? null : instanceIdArg.longValue());
-                  wrapped.put("result", output);
-                } catch (Error | RuntimeException exception) {
-                  wrapped.put("error", wrapError(exception));
-                }
-                reply.reply(wrapped);
-              });
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      ArrayList<Object> args = (ArrayList<Object>) message;
+                      Number instanceIdArg = (Number) args.get(0);
+                      if (instanceIdArg == null) {
+                        throw new NullPointerException("instanceIdArg unexpectedly null.");
+                      }
+                      String output =
+                              api.getTitle((instanceIdArg == null) ? null : instanceIdArg.longValue());
+                      wrapped.put("result", output);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                    }
+                    reply.reply(wrapped);
+                  });
         } else {
           channel.setMessageHandler(null);
         }
       }
       {
         BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger, "dev.flutter.pigeon.WebViewHostApi.scrollTo", getCodec());
+                new BasicMessageChannel<>(
+                        binaryMessenger, "dev.flutter.pigeon.WebViewHostApi.scrollTo", getCodec());
         if (api != null) {
           channel.setMessageHandler(
-              (message, reply) -> {
-                Map<String, Object> wrapped = new HashMap<>();
-                try {
-                  ArrayList<Object> args = (ArrayList<Object>) message;
-                  Number instanceIdArg = (Number) args.get(0);
-                  if (instanceIdArg == null) {
-                    throw new NullPointerException("instanceIdArg unexpectedly null.");
-                  }
-                  Number xArg = (Number) args.get(1);
-                  if (xArg == null) {
-                    throw new NullPointerException("xArg unexpectedly null.");
-                  }
-                  Number yArg = (Number) args.get(2);
-                  if (yArg == null) {
-                    throw new NullPointerException("yArg unexpectedly null.");
-                  }
-                  api.scrollTo(
-                      (instanceIdArg == null) ? null : instanceIdArg.longValue(),
-                      (xArg == null) ? null : xArg.longValue(),
-                      (yArg == null) ? null : yArg.longValue());
-                  wrapped.put("result", null);
-                } catch (Error | RuntimeException exception) {
-                  wrapped.put("error", wrapError(exception));
-                }
-                reply.reply(wrapped);
-              });
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      ArrayList<Object> args = (ArrayList<Object>) message;
+                      Number instanceIdArg = (Number) args.get(0);
+                      if (instanceIdArg == null) {
+                        throw new NullPointerException("instanceIdArg unexpectedly null.");
+                      }
+                      Number xArg = (Number) args.get(1);
+                      if (xArg == null) {
+                        throw new NullPointerException("xArg unexpectedly null.");
+                      }
+                      Number yArg = (Number) args.get(2);
+                      if (yArg == null) {
+                        throw new NullPointerException("yArg unexpectedly null.");
+                      }
+                      api.scrollTo(
+                              (instanceIdArg == null) ? null : instanceIdArg.longValue(),
+                              (xArg == null) ? null : xArg.longValue(),
+                              (yArg == null) ? null : yArg.longValue());
+                      wrapped.put("result", null);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                    }
+                    reply.reply(wrapped);
+                  });
         } else {
           channel.setMessageHandler(null);
         }
       }
       {
         BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger, "dev.flutter.pigeon.WebViewHostApi.scrollBy", getCodec());
+                new BasicMessageChannel<>(
+                        binaryMessenger, "dev.flutter.pigeon.WebViewHostApi.scrollBy", getCodec());
         if (api != null) {
           channel.setMessageHandler(
-              (message, reply) -> {
-                Map<String, Object> wrapped = new HashMap<>();
-                try {
-                  ArrayList<Object> args = (ArrayList<Object>) message;
-                  Number instanceIdArg = (Number) args.get(0);
-                  if (instanceIdArg == null) {
-                    throw new NullPointerException("instanceIdArg unexpectedly null.");
-                  }
-                  Number xArg = (Number) args.get(1);
-                  if (xArg == null) {
-                    throw new NullPointerException("xArg unexpectedly null.");
-                  }
-                  Number yArg = (Number) args.get(2);
-                  if (yArg == null) {
-                    throw new NullPointerException("yArg unexpectedly null.");
-                  }
-                  api.scrollBy(
-                      (instanceIdArg == null) ? null : instanceIdArg.longValue(),
-                      (xArg == null) ? null : xArg.longValue(),
-                      (yArg == null) ? null : yArg.longValue());
-                  wrapped.put("result", null);
-                } catch (Error | RuntimeException exception) {
-                  wrapped.put("error", wrapError(exception));
-                }
-                reply.reply(wrapped);
-              });
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      ArrayList<Object> args = (ArrayList<Object>) message;
+                      Number instanceIdArg = (Number) args.get(0);
+                      if (instanceIdArg == null) {
+                        throw new NullPointerException("instanceIdArg unexpectedly null.");
+                      }
+                      Number xArg = (Number) args.get(1);
+                      if (xArg == null) {
+                        throw new NullPointerException("xArg unexpectedly null.");
+                      }
+                      Number yArg = (Number) args.get(2);
+                      if (yArg == null) {
+                        throw new NullPointerException("yArg unexpectedly null.");
+                      }
+                      api.scrollBy(
+                              (instanceIdArg == null) ? null : instanceIdArg.longValue(),
+                              (xArg == null) ? null : xArg.longValue(),
+                              (yArg == null) ? null : yArg.longValue());
+                      wrapped.put("result", null);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                    }
+                    reply.reply(wrapped);
+                  });
         } else {
           channel.setMessageHandler(null);
         }
       }
       {
         BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger, "dev.flutter.pigeon.WebViewHostApi.getScrollX", getCodec());
+                new BasicMessageChannel<>(
+                        binaryMessenger, "dev.flutter.pigeon.WebViewHostApi.getScrollX", getCodec());
         if (api != null) {
           channel.setMessageHandler(
-              (message, reply) -> {
-                Map<String, Object> wrapped = new HashMap<>();
-                try {
-                  ArrayList<Object> args = (ArrayList<Object>) message;
-                  Number instanceIdArg = (Number) args.get(0);
-                  if (instanceIdArg == null) {
-                    throw new NullPointerException("instanceIdArg unexpectedly null.");
-                  }
-                  Long output =
-                      api.getScrollX((instanceIdArg == null) ? null : instanceIdArg.longValue());
-                  wrapped.put("result", output);
-                } catch (Error | RuntimeException exception) {
-                  wrapped.put("error", wrapError(exception));
-                }
-                reply.reply(wrapped);
-              });
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      ArrayList<Object> args = (ArrayList<Object>) message;
+                      Number instanceIdArg = (Number) args.get(0);
+                      if (instanceIdArg == null) {
+                        throw new NullPointerException("instanceIdArg unexpectedly null.");
+                      }
+                      Long output =
+                              api.getScrollX((instanceIdArg == null) ? null : instanceIdArg.longValue());
+                      wrapped.put("result", output);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                    }
+                    reply.reply(wrapped);
+                  });
         } else {
           channel.setMessageHandler(null);
         }
       }
       {
         BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger, "dev.flutter.pigeon.WebViewHostApi.getScrollY", getCodec());
+                new BasicMessageChannel<>(
+                        binaryMessenger, "dev.flutter.pigeon.WebViewHostApi.getScrollY", getCodec());
         if (api != null) {
           channel.setMessageHandler(
-              (message, reply) -> {
-                Map<String, Object> wrapped = new HashMap<>();
-                try {
-                  ArrayList<Object> args = (ArrayList<Object>) message;
-                  Number instanceIdArg = (Number) args.get(0);
-                  if (instanceIdArg == null) {
-                    throw new NullPointerException("instanceIdArg unexpectedly null.");
-                  }
-                  Long output =
-                      api.getScrollY((instanceIdArg == null) ? null : instanceIdArg.longValue());
-                  wrapped.put("result", output);
-                } catch (Error | RuntimeException exception) {
-                  wrapped.put("error", wrapError(exception));
-                }
-                reply.reply(wrapped);
-              });
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      ArrayList<Object> args = (ArrayList<Object>) message;
+                      Number instanceIdArg = (Number) args.get(0);
+                      if (instanceIdArg == null) {
+                        throw new NullPointerException("instanceIdArg unexpectedly null.");
+                      }
+                      Long output =
+                              api.getScrollY((instanceIdArg == null) ? null : instanceIdArg.longValue());
+                      wrapped.put("result", output);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                    }
+                    reply.reply(wrapped);
+                  });
         } else {
           channel.setMessageHandler(null);
         }
       }
       {
         BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger,
-                "dev.flutter.pigeon.WebViewHostApi.setWebContentsDebuggingEnabled",
-                getCodec());
+                new BasicMessageChannel<>(
+                        binaryMessenger,
+                        "dev.flutter.pigeon.WebViewHostApi.setWebContentsDebuggingEnabled",
+                        getCodec());
         if (api != null) {
           channel.setMessageHandler(
-              (message, reply) -> {
-                Map<String, Object> wrapped = new HashMap<>();
-                try {
-                  ArrayList<Object> args = (ArrayList<Object>) message;
-                  Boolean enabledArg = (Boolean) args.get(0);
-                  if (enabledArg == null) {
-                    throw new NullPointerException("enabledArg unexpectedly null.");
-                  }
-                  api.setWebContentsDebuggingEnabled(enabledArg);
-                  wrapped.put("result", null);
-                } catch (Error | RuntimeException exception) {
-                  wrapped.put("error", wrapError(exception));
-                }
-                reply.reply(wrapped);
-              });
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      ArrayList<Object> args = (ArrayList<Object>) message;
+                      Boolean enabledArg = (Boolean) args.get(0);
+                      if (enabledArg == null) {
+                        throw new NullPointerException("enabledArg unexpectedly null.");
+                      }
+                      api.setWebContentsDebuggingEnabled(enabledArg);
+                      wrapped.put("result", null);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                    }
+                    reply.reply(wrapped);
+                  });
         } else {
           channel.setMessageHandler(null);
         }
       }
       {
         BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger, "dev.flutter.pigeon.WebViewHostApi.setWebViewClient", getCodec());
+                new BasicMessageChannel<>(
+                        binaryMessenger, "dev.flutter.pigeon.WebViewHostApi.setWebViewClient", getCodec());
         if (api != null) {
           channel.setMessageHandler(
-              (message, reply) -> {
-                Map<String, Object> wrapped = new HashMap<>();
-                try {
-                  ArrayList<Object> args = (ArrayList<Object>) message;
-                  Number instanceIdArg = (Number) args.get(0);
-                  if (instanceIdArg == null) {
-                    throw new NullPointerException("instanceIdArg unexpectedly null.");
-                  }
-                  Number webViewClientInstanceIdArg = (Number) args.get(1);
-                  if (webViewClientInstanceIdArg == null) {
-                    throw new NullPointerException("webViewClientInstanceIdArg unexpectedly null.");
-                  }
-                  api.setWebViewClient(
-                      (instanceIdArg == null) ? null : instanceIdArg.longValue(),
-                      (webViewClientInstanceIdArg == null)
-                          ? null
-                          : webViewClientInstanceIdArg.longValue());
-                  wrapped.put("result", null);
-                } catch (Error | RuntimeException exception) {
-                  wrapped.put("error", wrapError(exception));
-                }
-                reply.reply(wrapped);
-              });
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      ArrayList<Object> args = (ArrayList<Object>) message;
+                      Number instanceIdArg = (Number) args.get(0);
+                      if (instanceIdArg == null) {
+                        throw new NullPointerException("instanceIdArg unexpectedly null.");
+                      }
+                      Number webViewClientInstanceIdArg = (Number) args.get(1);
+                      if (webViewClientInstanceIdArg == null) {
+                        throw new NullPointerException("webViewClientInstanceIdArg unexpectedly null.");
+                      }
+                      api.setWebViewClient(
+                              (instanceIdArg == null) ? null : instanceIdArg.longValue(),
+                              (webViewClientInstanceIdArg == null)
+                                      ? null
+                                      : webViewClientInstanceIdArg.longValue());
+                      wrapped.put("result", null);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                    }
+                    reply.reply(wrapped);
+                  });
         } else {
           channel.setMessageHandler(null);
         }
       }
       {
         BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger,
-                "dev.flutter.pigeon.WebViewHostApi.addJavaScriptChannel",
-                getCodec());
+                new BasicMessageChannel<>(
+                        binaryMessenger,
+                        "dev.flutter.pigeon.WebViewHostApi.addJavaScriptChannel",
+                        getCodec());
         if (api != null) {
           channel.setMessageHandler(
-              (message, reply) -> {
-                Map<String, Object> wrapped = new HashMap<>();
-                try {
-                  ArrayList<Object> args = (ArrayList<Object>) message;
-                  Number instanceIdArg = (Number) args.get(0);
-                  if (instanceIdArg == null) {
-                    throw new NullPointerException("instanceIdArg unexpectedly null.");
-                  }
-                  Number javaScriptChannelInstanceIdArg = (Number) args.get(1);
-                  if (javaScriptChannelInstanceIdArg == null) {
-                    throw new NullPointerException(
-                        "javaScriptChannelInstanceIdArg unexpectedly null.");
-                  }
-                  api.addJavaScriptChannel(
-                      (instanceIdArg == null) ? null : instanceIdArg.longValue(),
-                      (javaScriptChannelInstanceIdArg == null)
-                          ? null
-                          : javaScriptChannelInstanceIdArg.longValue());
-                  wrapped.put("result", null);
-                } catch (Error | RuntimeException exception) {
-                  wrapped.put("error", wrapError(exception));
-                }
-                reply.reply(wrapped);
-              });
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      ArrayList<Object> args = (ArrayList<Object>) message;
+                      Number instanceIdArg = (Number) args.get(0);
+                      if (instanceIdArg == null) {
+                        throw new NullPointerException("instanceIdArg unexpectedly null.");
+                      }
+                      Number javaScriptChannelInstanceIdArg = (Number) args.get(1);
+                      if (javaScriptChannelInstanceIdArg == null) {
+                        throw new NullPointerException(
+                                "javaScriptChannelInstanceIdArg unexpectedly null.");
+                      }
+                      api.addJavaScriptChannel(
+                              (instanceIdArg == null) ? null : instanceIdArg.longValue(),
+                              (javaScriptChannelInstanceIdArg == null)
+                                      ? null
+                                      : javaScriptChannelInstanceIdArg.longValue());
+                      wrapped.put("result", null);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                    }
+                    reply.reply(wrapped);
+                  });
         } else {
           channel.setMessageHandler(null);
         }
       }
       {
         BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger,
-                "dev.flutter.pigeon.WebViewHostApi.removeJavaScriptChannel",
-                getCodec());
+                new BasicMessageChannel<>(
+                        binaryMessenger,
+                        "dev.flutter.pigeon.WebViewHostApi.removeJavaScriptChannel",
+                        getCodec());
         if (api != null) {
           channel.setMessageHandler(
-              (message, reply) -> {
-                Map<String, Object> wrapped = new HashMap<>();
-                try {
-                  ArrayList<Object> args = (ArrayList<Object>) message;
-                  Number instanceIdArg = (Number) args.get(0);
-                  if (instanceIdArg == null) {
-                    throw new NullPointerException("instanceIdArg unexpectedly null.");
-                  }
-                  Number javaScriptChannelInstanceIdArg = (Number) args.get(1);
-                  if (javaScriptChannelInstanceIdArg == null) {
-                    throw new NullPointerException(
-                        "javaScriptChannelInstanceIdArg unexpectedly null.");
-                  }
-                  api.removeJavaScriptChannel(
-                      (instanceIdArg == null) ? null : instanceIdArg.longValue(),
-                      (javaScriptChannelInstanceIdArg == null)
-                          ? null
-                          : javaScriptChannelInstanceIdArg.longValue());
-                  wrapped.put("result", null);
-                } catch (Error | RuntimeException exception) {
-                  wrapped.put("error", wrapError(exception));
-                }
-                reply.reply(wrapped);
-              });
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      ArrayList<Object> args = (ArrayList<Object>) message;
+                      Number instanceIdArg = (Number) args.get(0);
+                      if (instanceIdArg == null) {
+                        throw new NullPointerException("instanceIdArg unexpectedly null.");
+                      }
+                      Number javaScriptChannelInstanceIdArg = (Number) args.get(1);
+                      if (javaScriptChannelInstanceIdArg == null) {
+                        throw new NullPointerException(
+                                "javaScriptChannelInstanceIdArg unexpectedly null.");
+                      }
+                      api.removeJavaScriptChannel(
+                              (instanceIdArg == null) ? null : instanceIdArg.longValue(),
+                              (javaScriptChannelInstanceIdArg == null)
+                                      ? null
+                                      : javaScriptChannelInstanceIdArg.longValue());
+                      wrapped.put("result", null);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                    }
+                    reply.reply(wrapped);
+                  });
         } else {
           channel.setMessageHandler(null);
         }
       }
       {
         BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger,
-                "dev.flutter.pigeon.WebViewHostApi.setDownloadListener",
-                getCodec());
+                new BasicMessageChannel<>(
+                        binaryMessenger,
+                        "dev.flutter.pigeon.WebViewHostApi.setDownloadListener",
+                        getCodec());
         if (api != null) {
           channel.setMessageHandler(
-              (message, reply) -> {
-                Map<String, Object> wrapped = new HashMap<>();
-                try {
-                  ArrayList<Object> args = (ArrayList<Object>) message;
-                  Number instanceIdArg = (Number) args.get(0);
-                  if (instanceIdArg == null) {
-                    throw new NullPointerException("instanceIdArg unexpectedly null.");
-                  }
-                  Number listenerInstanceIdArg = (Number) args.get(1);
-                  api.setDownloadListener(
-                      (instanceIdArg == null) ? null : instanceIdArg.longValue(),
-                      (listenerInstanceIdArg == null) ? null : listenerInstanceIdArg.longValue());
-                  wrapped.put("result", null);
-                } catch (Error | RuntimeException exception) {
-                  wrapped.put("error", wrapError(exception));
-                }
-                reply.reply(wrapped);
-              });
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      ArrayList<Object> args = (ArrayList<Object>) message;
+                      Number instanceIdArg = (Number) args.get(0);
+                      if (instanceIdArg == null) {
+                        throw new NullPointerException("instanceIdArg unexpectedly null.");
+                      }
+                      Number listenerInstanceIdArg = (Number) args.get(1);
+                      api.setDownloadListener(
+                              (instanceIdArg == null) ? null : instanceIdArg.longValue(),
+                              (listenerInstanceIdArg == null) ? null : listenerInstanceIdArg.longValue());
+                      wrapped.put("result", null);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                    }
+                    reply.reply(wrapped);
+                  });
         } else {
           channel.setMessageHandler(null);
         }
       }
       {
         BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger,
-                "dev.flutter.pigeon.WebViewHostApi.setWebChromeClient",
-                getCodec());
+                new BasicMessageChannel<>(
+                        binaryMessenger,
+                        "dev.flutter.pigeon.WebViewHostApi.setWebChromeClient",
+                        getCodec());
         if (api != null) {
           channel.setMessageHandler(
-              (message, reply) -> {
-                Map<String, Object> wrapped = new HashMap<>();
-                try {
-                  ArrayList<Object> args = (ArrayList<Object>) message;
-                  Number instanceIdArg = (Number) args.get(0);
-                  if (instanceIdArg == null) {
-                    throw new NullPointerException("instanceIdArg unexpectedly null.");
-                  }
-                  Number clientInstanceIdArg = (Number) args.get(1);
-                  api.setWebChromeClient(
-                      (instanceIdArg == null) ? null : instanceIdArg.longValue(),
-                      (clientInstanceIdArg == null) ? null : clientInstanceIdArg.longValue());
-                  wrapped.put("result", null);
-                } catch (Error | RuntimeException exception) {
-                  wrapped.put("error", wrapError(exception));
-                }
-                reply.reply(wrapped);
-              });
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      ArrayList<Object> args = (ArrayList<Object>) message;
+                      Number instanceIdArg = (Number) args.get(0);
+                      if (instanceIdArg == null) {
+                        throw new NullPointerException("instanceIdArg unexpectedly null.");
+                      }
+                      Number clientInstanceIdArg = (Number) args.get(1);
+                      api.setWebChromeClient(
+                              (instanceIdArg == null) ? null : instanceIdArg.longValue(),
+                              (clientInstanceIdArg == null) ? null : clientInstanceIdArg.longValue());
+                      wrapped.put("result", null);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                    }
+                    reply.reply(wrapped);
+                  });
         } else {
           channel.setMessageHandler(null);
         }
       }
       {
         BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger,
-                "dev.flutter.pigeon.WebViewHostApi.setBackgroundColor",
-                getCodec());
+                new BasicMessageChannel<>(
+                        binaryMessenger,
+                        "dev.flutter.pigeon.WebViewHostApi.setBackgroundColor",
+                        getCodec());
         if (api != null) {
           channel.setMessageHandler(
-              (message, reply) -> {
-                Map<String, Object> wrapped = new HashMap<>();
-                try {
-                  ArrayList<Object> args = (ArrayList<Object>) message;
-                  Number instanceIdArg = (Number) args.get(0);
-                  if (instanceIdArg == null) {
-                    throw new NullPointerException("instanceIdArg unexpectedly null.");
-                  }
-                  Number colorArg = (Number) args.get(1);
-                  if (colorArg == null) {
-                    throw new NullPointerException("colorArg unexpectedly null.");
-                  }
-                  api.setBackgroundColor(
-                      (instanceIdArg == null) ? null : instanceIdArg.longValue(),
-                      (colorArg == null) ? null : colorArg.longValue());
-                  wrapped.put("result", null);
-                } catch (Error | RuntimeException exception) {
-                  wrapped.put("error", wrapError(exception));
-                }
-                reply.reply(wrapped);
-              });
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      ArrayList<Object> args = (ArrayList<Object>) message;
+                      Number instanceIdArg = (Number) args.get(0);
+                      if (instanceIdArg == null) {
+                        throw new NullPointerException("instanceIdArg unexpectedly null.");
+                      }
+                      Number colorArg = (Number) args.get(1);
+                      if (colorArg == null) {
+                        throw new NullPointerException("colorArg unexpectedly null.");
+                      }
+                      api.setBackgroundColor(
+                              (instanceIdArg == null) ? null : instanceIdArg.longValue(),
+                              (colorArg == null) ? null : colorArg.longValue());
+                      wrapped.put("result", null);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                    }
+                    reply.reply(wrapped);
+                  });
         } else {
           channel.setMessageHandler(null);
         }
@@ -1291,6 +1291,8 @@ public class GeneratedAndroidWebView {
 
     void setAllowFileAccess(@NonNull Long instanceId, @NonNull Boolean enabled);
 
+    void setGeolocationEnabled(Long instanceId, Boolean enabled);
+
     /** The codec used by WebSettingsHostApi. */
     static MessageCodec<Object> getCodec() {
       return WebSettingsHostApiCodec.INSTANCE;
@@ -1302,438 +1304,466 @@ public class GeneratedAndroidWebView {
     static void setup(BinaryMessenger binaryMessenger, WebSettingsHostApi api) {
       {
         BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger, "dev.flutter.pigeon.WebSettingsHostApi.create", getCodec());
+                new BasicMessageChannel<>(
+                        binaryMessenger, "dev.flutter.pigeon.WebSettingsHostApi.create", getCodec());
         if (api != null) {
           channel.setMessageHandler(
-              (message, reply) -> {
-                Map<String, Object> wrapped = new HashMap<>();
-                try {
-                  ArrayList<Object> args = (ArrayList<Object>) message;
-                  Number instanceIdArg = (Number) args.get(0);
-                  if (instanceIdArg == null) {
-                    throw new NullPointerException("instanceIdArg unexpectedly null.");
-                  }
-                  Number webViewInstanceIdArg = (Number) args.get(1);
-                  if (webViewInstanceIdArg == null) {
-                    throw new NullPointerException("webViewInstanceIdArg unexpectedly null.");
-                  }
-                  api.create(
-                      (instanceIdArg == null) ? null : instanceIdArg.longValue(),
-                      (webViewInstanceIdArg == null) ? null : webViewInstanceIdArg.longValue());
-                  wrapped.put("result", null);
-                } catch (Error | RuntimeException exception) {
-                  wrapped.put("error", wrapError(exception));
-                }
-                reply.reply(wrapped);
-              });
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      ArrayList<Object> args = (ArrayList<Object>) message;
+                      Number instanceIdArg = (Number) args.get(0);
+                      if (instanceIdArg == null) {
+                        throw new NullPointerException("instanceIdArg unexpectedly null.");
+                      }
+                      Number webViewInstanceIdArg = (Number) args.get(1);
+                      if (webViewInstanceIdArg == null) {
+                        throw new NullPointerException("webViewInstanceIdArg unexpectedly null.");
+                      }
+                      api.create(
+                              (instanceIdArg == null) ? null : instanceIdArg.longValue(),
+                              (webViewInstanceIdArg == null) ? null : webViewInstanceIdArg.longValue());
+                      wrapped.put("result", null);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                    }
+                    reply.reply(wrapped);
+                  });
         } else {
           channel.setMessageHandler(null);
         }
       }
       {
         BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger, "dev.flutter.pigeon.WebSettingsHostApi.dispose", getCodec());
+                new BasicMessageChannel<>(
+                        binaryMessenger, "dev.flutter.pigeon.WebSettingsHostApi.dispose", getCodec());
         if (api != null) {
           channel.setMessageHandler(
-              (message, reply) -> {
-                Map<String, Object> wrapped = new HashMap<>();
-                try {
-                  ArrayList<Object> args = (ArrayList<Object>) message;
-                  Number instanceIdArg = (Number) args.get(0);
-                  if (instanceIdArg == null) {
-                    throw new NullPointerException("instanceIdArg unexpectedly null.");
-                  }
-                  api.dispose((instanceIdArg == null) ? null : instanceIdArg.longValue());
-                  wrapped.put("result", null);
-                } catch (Error | RuntimeException exception) {
-                  wrapped.put("error", wrapError(exception));
-                }
-                reply.reply(wrapped);
-              });
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      ArrayList<Object> args = (ArrayList<Object>) message;
+                      Number instanceIdArg = (Number) args.get(0);
+                      if (instanceIdArg == null) {
+                        throw new NullPointerException("instanceIdArg unexpectedly null.");
+                      }
+                      api.dispose((instanceIdArg == null) ? null : instanceIdArg.longValue());
+                      wrapped.put("result", null);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                    }
+                    reply.reply(wrapped);
+                  });
         } else {
           channel.setMessageHandler(null);
         }
       }
       {
         BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger,
-                "dev.flutter.pigeon.WebSettingsHostApi.setDomStorageEnabled",
-                getCodec());
+                new BasicMessageChannel<>(
+                        binaryMessenger,
+                        "dev.flutter.pigeon.WebSettingsHostApi.setDomStorageEnabled",
+                        getCodec());
         if (api != null) {
           channel.setMessageHandler(
-              (message, reply) -> {
-                Map<String, Object> wrapped = new HashMap<>();
-                try {
-                  ArrayList<Object> args = (ArrayList<Object>) message;
-                  Number instanceIdArg = (Number) args.get(0);
-                  if (instanceIdArg == null) {
-                    throw new NullPointerException("instanceIdArg unexpectedly null.");
-                  }
-                  Boolean flagArg = (Boolean) args.get(1);
-                  if (flagArg == null) {
-                    throw new NullPointerException("flagArg unexpectedly null.");
-                  }
-                  api.setDomStorageEnabled(
-                      (instanceIdArg == null) ? null : instanceIdArg.longValue(), flagArg);
-                  wrapped.put("result", null);
-                } catch (Error | RuntimeException exception) {
-                  wrapped.put("error", wrapError(exception));
-                }
-                reply.reply(wrapped);
-              });
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      ArrayList<Object> args = (ArrayList<Object>) message;
+                      Number instanceIdArg = (Number) args.get(0);
+                      if (instanceIdArg == null) {
+                        throw new NullPointerException("instanceIdArg unexpectedly null.");
+                      }
+                      Boolean flagArg = (Boolean) args.get(1);
+                      if (flagArg == null) {
+                        throw new NullPointerException("flagArg unexpectedly null.");
+                      }
+                      api.setDomStorageEnabled(
+                              (instanceIdArg == null) ? null : instanceIdArg.longValue(), flagArg);
+                      wrapped.put("result", null);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                    }
+                    reply.reply(wrapped);
+                  });
         } else {
           channel.setMessageHandler(null);
         }
       }
       {
         BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger,
-                "dev.flutter.pigeon.WebSettingsHostApi.setJavaScriptCanOpenWindowsAutomatically",
-                getCodec());
+                new BasicMessageChannel<>(
+                        binaryMessenger,
+                        "dev.flutter.pigeon.WebSettingsHostApi.setJavaScriptCanOpenWindowsAutomatically",
+                        getCodec());
         if (api != null) {
           channel.setMessageHandler(
-              (message, reply) -> {
-                Map<String, Object> wrapped = new HashMap<>();
-                try {
-                  ArrayList<Object> args = (ArrayList<Object>) message;
-                  Number instanceIdArg = (Number) args.get(0);
-                  if (instanceIdArg == null) {
-                    throw new NullPointerException("instanceIdArg unexpectedly null.");
-                  }
-                  Boolean flagArg = (Boolean) args.get(1);
-                  if (flagArg == null) {
-                    throw new NullPointerException("flagArg unexpectedly null.");
-                  }
-                  api.setJavaScriptCanOpenWindowsAutomatically(
-                      (instanceIdArg == null) ? null : instanceIdArg.longValue(), flagArg);
-                  wrapped.put("result", null);
-                } catch (Error | RuntimeException exception) {
-                  wrapped.put("error", wrapError(exception));
-                }
-                reply.reply(wrapped);
-              });
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      ArrayList<Object> args = (ArrayList<Object>) message;
+                      Number instanceIdArg = (Number) args.get(0);
+                      if (instanceIdArg == null) {
+                        throw new NullPointerException("instanceIdArg unexpectedly null.");
+                      }
+                      Boolean flagArg = (Boolean) args.get(1);
+                      if (flagArg == null) {
+                        throw new NullPointerException("flagArg unexpectedly null.");
+                      }
+                      api.setJavaScriptCanOpenWindowsAutomatically(
+                              (instanceIdArg == null) ? null : instanceIdArg.longValue(), flagArg);
+                      wrapped.put("result", null);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                    }
+                    reply.reply(wrapped);
+                  });
         } else {
           channel.setMessageHandler(null);
         }
       }
       {
         BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger,
-                "dev.flutter.pigeon.WebSettingsHostApi.setSupportMultipleWindows",
-                getCodec());
+                new BasicMessageChannel<>(
+                        binaryMessenger,
+                        "dev.flutter.pigeon.WebSettingsHostApi.setSupportMultipleWindows",
+                        getCodec());
         if (api != null) {
           channel.setMessageHandler(
-              (message, reply) -> {
-                Map<String, Object> wrapped = new HashMap<>();
-                try {
-                  ArrayList<Object> args = (ArrayList<Object>) message;
-                  Number instanceIdArg = (Number) args.get(0);
-                  if (instanceIdArg == null) {
-                    throw new NullPointerException("instanceIdArg unexpectedly null.");
-                  }
-                  Boolean supportArg = (Boolean) args.get(1);
-                  if (supportArg == null) {
-                    throw new NullPointerException("supportArg unexpectedly null.");
-                  }
-                  api.setSupportMultipleWindows(
-                      (instanceIdArg == null) ? null : instanceIdArg.longValue(), supportArg);
-                  wrapped.put("result", null);
-                } catch (Error | RuntimeException exception) {
-                  wrapped.put("error", wrapError(exception));
-                }
-                reply.reply(wrapped);
-              });
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      ArrayList<Object> args = (ArrayList<Object>) message;
+                      Number instanceIdArg = (Number) args.get(0);
+                      if (instanceIdArg == null) {
+                        throw new NullPointerException("instanceIdArg unexpectedly null.");
+                      }
+                      Boolean supportArg = (Boolean) args.get(1);
+                      if (supportArg == null) {
+                        throw new NullPointerException("supportArg unexpectedly null.");
+                      }
+                      api.setSupportMultipleWindows(
+                              (instanceIdArg == null) ? null : instanceIdArg.longValue(), supportArg);
+                      wrapped.put("result", null);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                    }
+                    reply.reply(wrapped);
+                  });
         } else {
           channel.setMessageHandler(null);
         }
       }
       {
         BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger,
-                "dev.flutter.pigeon.WebSettingsHostApi.setJavaScriptEnabled",
-                getCodec());
+                new BasicMessageChannel<>(
+                        binaryMessenger,
+                        "dev.flutter.pigeon.WebSettingsHostApi.setJavaScriptEnabled",
+                        getCodec());
         if (api != null) {
           channel.setMessageHandler(
-              (message, reply) -> {
-                Map<String, Object> wrapped = new HashMap<>();
-                try {
-                  ArrayList<Object> args = (ArrayList<Object>) message;
-                  Number instanceIdArg = (Number) args.get(0);
-                  if (instanceIdArg == null) {
-                    throw new NullPointerException("instanceIdArg unexpectedly null.");
-                  }
-                  Boolean flagArg = (Boolean) args.get(1);
-                  if (flagArg == null) {
-                    throw new NullPointerException("flagArg unexpectedly null.");
-                  }
-                  api.setJavaScriptEnabled(
-                      (instanceIdArg == null) ? null : instanceIdArg.longValue(), flagArg);
-                  wrapped.put("result", null);
-                } catch (Error | RuntimeException exception) {
-                  wrapped.put("error", wrapError(exception));
-                }
-                reply.reply(wrapped);
-              });
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      ArrayList<Object> args = (ArrayList<Object>) message;
+                      Number instanceIdArg = (Number) args.get(0);
+                      if (instanceIdArg == null) {
+                        throw new NullPointerException("instanceIdArg unexpectedly null.");
+                      }
+                      Boolean flagArg = (Boolean) args.get(1);
+                      if (flagArg == null) {
+                        throw new NullPointerException("flagArg unexpectedly null.");
+                      }
+                      api.setJavaScriptEnabled(
+                              (instanceIdArg == null) ? null : instanceIdArg.longValue(), flagArg);
+                      wrapped.put("result", null);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                    }
+                    reply.reply(wrapped);
+                  });
         } else {
           channel.setMessageHandler(null);
         }
       }
       {
         BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger,
-                "dev.flutter.pigeon.WebSettingsHostApi.setUserAgentString",
-                getCodec());
+                new BasicMessageChannel<>(
+                        binaryMessenger,
+                        "dev.flutter.pigeon.WebSettingsHostApi.setUserAgentString",
+                        getCodec());
         if (api != null) {
           channel.setMessageHandler(
-              (message, reply) -> {
-                Map<String, Object> wrapped = new HashMap<>();
-                try {
-                  ArrayList<Object> args = (ArrayList<Object>) message;
-                  Number instanceIdArg = (Number) args.get(0);
-                  if (instanceIdArg == null) {
-                    throw new NullPointerException("instanceIdArg unexpectedly null.");
-                  }
-                  String userAgentStringArg = (String) args.get(1);
-                  api.setUserAgentString(
-                      (instanceIdArg == null) ? null : instanceIdArg.longValue(),
-                      userAgentStringArg);
-                  wrapped.put("result", null);
-                } catch (Error | RuntimeException exception) {
-                  wrapped.put("error", wrapError(exception));
-                }
-                reply.reply(wrapped);
-              });
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      ArrayList<Object> args = (ArrayList<Object>) message;
+                      Number instanceIdArg = (Number) args.get(0);
+                      if (instanceIdArg == null) {
+                        throw new NullPointerException("instanceIdArg unexpectedly null.");
+                      }
+                      String userAgentStringArg = (String) args.get(1);
+                      api.setUserAgentString(
+                              (instanceIdArg == null) ? null : instanceIdArg.longValue(),
+                              userAgentStringArg);
+                      wrapped.put("result", null);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                    }
+                    reply.reply(wrapped);
+                  });
         } else {
           channel.setMessageHandler(null);
         }
       }
       {
         BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger,
-                "dev.flutter.pigeon.WebSettingsHostApi.setMediaPlaybackRequiresUserGesture",
-                getCodec());
+                new BasicMessageChannel<>(
+                        binaryMessenger,
+                        "dev.flutter.pigeon.WebSettingsHostApi.setMediaPlaybackRequiresUserGesture",
+                        getCodec());
         if (api != null) {
           channel.setMessageHandler(
-              (message, reply) -> {
-                Map<String, Object> wrapped = new HashMap<>();
-                try {
-                  ArrayList<Object> args = (ArrayList<Object>) message;
-                  Number instanceIdArg = (Number) args.get(0);
-                  if (instanceIdArg == null) {
-                    throw new NullPointerException("instanceIdArg unexpectedly null.");
-                  }
-                  Boolean requireArg = (Boolean) args.get(1);
-                  if (requireArg == null) {
-                    throw new NullPointerException("requireArg unexpectedly null.");
-                  }
-                  api.setMediaPlaybackRequiresUserGesture(
-                      (instanceIdArg == null) ? null : instanceIdArg.longValue(), requireArg);
-                  wrapped.put("result", null);
-                } catch (Error | RuntimeException exception) {
-                  wrapped.put("error", wrapError(exception));
-                }
-                reply.reply(wrapped);
-              });
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      ArrayList<Object> args = (ArrayList<Object>) message;
+                      Number instanceIdArg = (Number) args.get(0);
+                      if (instanceIdArg == null) {
+                        throw new NullPointerException("instanceIdArg unexpectedly null.");
+                      }
+                      Boolean requireArg = (Boolean) args.get(1);
+                      if (requireArg == null) {
+                        throw new NullPointerException("requireArg unexpectedly null.");
+                      }
+                      api.setMediaPlaybackRequiresUserGesture(
+                              (instanceIdArg == null) ? null : instanceIdArg.longValue(), requireArg);
+                      wrapped.put("result", null);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                    }
+                    reply.reply(wrapped);
+                  });
         } else {
           channel.setMessageHandler(null);
         }
       }
       {
         BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger,
-                "dev.flutter.pigeon.WebSettingsHostApi.setSupportZoom",
-                getCodec());
+                new BasicMessageChannel<>(
+                        binaryMessenger,
+                        "dev.flutter.pigeon.WebSettingsHostApi.setSupportZoom",
+                        getCodec());
         if (api != null) {
           channel.setMessageHandler(
-              (message, reply) -> {
-                Map<String, Object> wrapped = new HashMap<>();
-                try {
-                  ArrayList<Object> args = (ArrayList<Object>) message;
-                  Number instanceIdArg = (Number) args.get(0);
-                  if (instanceIdArg == null) {
-                    throw new NullPointerException("instanceIdArg unexpectedly null.");
-                  }
-                  Boolean supportArg = (Boolean) args.get(1);
-                  if (supportArg == null) {
-                    throw new NullPointerException("supportArg unexpectedly null.");
-                  }
-                  api.setSupportZoom(
-                      (instanceIdArg == null) ? null : instanceIdArg.longValue(), supportArg);
-                  wrapped.put("result", null);
-                } catch (Error | RuntimeException exception) {
-                  wrapped.put("error", wrapError(exception));
-                }
-                reply.reply(wrapped);
-              });
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      ArrayList<Object> args = (ArrayList<Object>) message;
+                      Number instanceIdArg = (Number) args.get(0);
+                      if (instanceIdArg == null) {
+                        throw new NullPointerException("instanceIdArg unexpectedly null.");
+                      }
+                      Boolean supportArg = (Boolean) args.get(1);
+                      if (supportArg == null) {
+                        throw new NullPointerException("supportArg unexpectedly null.");
+                      }
+                      api.setSupportZoom(
+                              (instanceIdArg == null) ? null : instanceIdArg.longValue(), supportArg);
+                      wrapped.put("result", null);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                    }
+                    reply.reply(wrapped);
+                  });
         } else {
           channel.setMessageHandler(null);
         }
       }
       {
         BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger,
-                "dev.flutter.pigeon.WebSettingsHostApi.setLoadWithOverviewMode",
-                getCodec());
+                new BasicMessageChannel<>(
+                        binaryMessenger,
+                        "dev.flutter.pigeon.WebSettingsHostApi.setLoadWithOverviewMode",
+                        getCodec());
         if (api != null) {
           channel.setMessageHandler(
-              (message, reply) -> {
-                Map<String, Object> wrapped = new HashMap<>();
-                try {
-                  ArrayList<Object> args = (ArrayList<Object>) message;
-                  Number instanceIdArg = (Number) args.get(0);
-                  if (instanceIdArg == null) {
-                    throw new NullPointerException("instanceIdArg unexpectedly null.");
-                  }
-                  Boolean overviewArg = (Boolean) args.get(1);
-                  if (overviewArg == null) {
-                    throw new NullPointerException("overviewArg unexpectedly null.");
-                  }
-                  api.setLoadWithOverviewMode(
-                      (instanceIdArg == null) ? null : instanceIdArg.longValue(), overviewArg);
-                  wrapped.put("result", null);
-                } catch (Error | RuntimeException exception) {
-                  wrapped.put("error", wrapError(exception));
-                }
-                reply.reply(wrapped);
-              });
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      ArrayList<Object> args = (ArrayList<Object>) message;
+                      Number instanceIdArg = (Number) args.get(0);
+                      if (instanceIdArg == null) {
+                        throw new NullPointerException("instanceIdArg unexpectedly null.");
+                      }
+                      Boolean overviewArg = (Boolean) args.get(1);
+                      if (overviewArg == null) {
+                        throw new NullPointerException("overviewArg unexpectedly null.");
+                      }
+                      api.setLoadWithOverviewMode(
+                              (instanceIdArg == null) ? null : instanceIdArg.longValue(), overviewArg);
+                      wrapped.put("result", null);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                    }
+                    reply.reply(wrapped);
+                  });
         } else {
           channel.setMessageHandler(null);
         }
       }
       {
         BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger,
-                "dev.flutter.pigeon.WebSettingsHostApi.setUseWideViewPort",
-                getCodec());
+                new BasicMessageChannel<>(
+                        binaryMessenger,
+                        "dev.flutter.pigeon.WebSettingsHostApi.setUseWideViewPort",
+                        getCodec());
         if (api != null) {
           channel.setMessageHandler(
-              (message, reply) -> {
-                Map<String, Object> wrapped = new HashMap<>();
-                try {
-                  ArrayList<Object> args = (ArrayList<Object>) message;
-                  Number instanceIdArg = (Number) args.get(0);
-                  if (instanceIdArg == null) {
-                    throw new NullPointerException("instanceIdArg unexpectedly null.");
-                  }
-                  Boolean useArg = (Boolean) args.get(1);
-                  if (useArg == null) {
-                    throw new NullPointerException("useArg unexpectedly null.");
-                  }
-                  api.setUseWideViewPort(
-                      (instanceIdArg == null) ? null : instanceIdArg.longValue(), useArg);
-                  wrapped.put("result", null);
-                } catch (Error | RuntimeException exception) {
-                  wrapped.put("error", wrapError(exception));
-                }
-                reply.reply(wrapped);
-              });
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      ArrayList<Object> args = (ArrayList<Object>) message;
+                      Number instanceIdArg = (Number) args.get(0);
+                      if (instanceIdArg == null) {
+                        throw new NullPointerException("instanceIdArg unexpectedly null.");
+                      }
+                      Boolean useArg = (Boolean) args.get(1);
+                      if (useArg == null) {
+                        throw new NullPointerException("useArg unexpectedly null.");
+                      }
+                      api.setUseWideViewPort(
+                              (instanceIdArg == null) ? null : instanceIdArg.longValue(), useArg);
+                      wrapped.put("result", null);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                    }
+                    reply.reply(wrapped);
+                  });
         } else {
           channel.setMessageHandler(null);
         }
       }
       {
         BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger,
-                "dev.flutter.pigeon.WebSettingsHostApi.setDisplayZoomControls",
-                getCodec());
+                new BasicMessageChannel<>(
+                        binaryMessenger,
+                        "dev.flutter.pigeon.WebSettingsHostApi.setDisplayZoomControls",
+                        getCodec());
         if (api != null) {
           channel.setMessageHandler(
-              (message, reply) -> {
-                Map<String, Object> wrapped = new HashMap<>();
-                try {
-                  ArrayList<Object> args = (ArrayList<Object>) message;
-                  Number instanceIdArg = (Number) args.get(0);
-                  if (instanceIdArg == null) {
-                    throw new NullPointerException("instanceIdArg unexpectedly null.");
-                  }
-                  Boolean enabledArg = (Boolean) args.get(1);
-                  if (enabledArg == null) {
-                    throw new NullPointerException("enabledArg unexpectedly null.");
-                  }
-                  api.setDisplayZoomControls(
-                      (instanceIdArg == null) ? null : instanceIdArg.longValue(), enabledArg);
-                  wrapped.put("result", null);
-                } catch (Error | RuntimeException exception) {
-                  wrapped.put("error", wrapError(exception));
-                }
-                reply.reply(wrapped);
-              });
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      ArrayList<Object> args = (ArrayList<Object>) message;
+                      Number instanceIdArg = (Number) args.get(0);
+                      if (instanceIdArg == null) {
+                        throw new NullPointerException("instanceIdArg unexpectedly null.");
+                      }
+                      Boolean enabledArg = (Boolean) args.get(1);
+                      if (enabledArg == null) {
+                        throw new NullPointerException("enabledArg unexpectedly null.");
+                      }
+                      api.setDisplayZoomControls(
+                              (instanceIdArg == null) ? null : instanceIdArg.longValue(), enabledArg);
+                      wrapped.put("result", null);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                    }
+                    reply.reply(wrapped);
+                  });
         } else {
           channel.setMessageHandler(null);
         }
       }
       {
         BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger,
-                "dev.flutter.pigeon.WebSettingsHostApi.setBuiltInZoomControls",
-                getCodec());
+                new BasicMessageChannel<>(
+                        binaryMessenger,
+                        "dev.flutter.pigeon.WebSettingsHostApi.setBuiltInZoomControls",
+                        getCodec());
         if (api != null) {
           channel.setMessageHandler(
-              (message, reply) -> {
-                Map<String, Object> wrapped = new HashMap<>();
-                try {
-                  ArrayList<Object> args = (ArrayList<Object>) message;
-                  Number instanceIdArg = (Number) args.get(0);
-                  if (instanceIdArg == null) {
-                    throw new NullPointerException("instanceIdArg unexpectedly null.");
-                  }
-                  Boolean enabledArg = (Boolean) args.get(1);
-                  if (enabledArg == null) {
-                    throw new NullPointerException("enabledArg unexpectedly null.");
-                  }
-                  api.setBuiltInZoomControls(
-                      (instanceIdArg == null) ? null : instanceIdArg.longValue(), enabledArg);
-                  wrapped.put("result", null);
-                } catch (Error | RuntimeException exception) {
-                  wrapped.put("error", wrapError(exception));
-                }
-                reply.reply(wrapped);
-              });
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      ArrayList<Object> args = (ArrayList<Object>) message;
+                      Number instanceIdArg = (Number) args.get(0);
+                      if (instanceIdArg == null) {
+                        throw new NullPointerException("instanceIdArg unexpectedly null.");
+                      }
+                      Boolean enabledArg = (Boolean) args.get(1);
+                      if (enabledArg == null) {
+                        throw new NullPointerException("enabledArg unexpectedly null.");
+                      }
+                      api.setBuiltInZoomControls(
+                              (instanceIdArg == null) ? null : instanceIdArg.longValue(), enabledArg);
+                      wrapped.put("result", null);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                    }
+                    reply.reply(wrapped);
+                  });
         } else {
           channel.setMessageHandler(null);
         }
       }
       {
         BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger,
-                "dev.flutter.pigeon.WebSettingsHostApi.setAllowFileAccess",
-                getCodec());
+                new BasicMessageChannel<>(
+                        binaryMessenger,
+                        "dev.flutter.pigeon.WebSettingsHostApi.setAllowFileAccess",
+                        getCodec());
         if (api != null) {
           channel.setMessageHandler(
-              (message, reply) -> {
-                Map<String, Object> wrapped = new HashMap<>();
-                try {
-                  ArrayList<Object> args = (ArrayList<Object>) message;
-                  Number instanceIdArg = (Number) args.get(0);
-                  if (instanceIdArg == null) {
-                    throw new NullPointerException("instanceIdArg unexpectedly null.");
-                  }
-                  Boolean enabledArg = (Boolean) args.get(1);
-                  if (enabledArg == null) {
-                    throw new NullPointerException("enabledArg unexpectedly null.");
-                  }
-                  api.setAllowFileAccess(
-                      (instanceIdArg == null) ? null : instanceIdArg.longValue(), enabledArg);
-                  wrapped.put("result", null);
-                } catch (Error | RuntimeException exception) {
-                  wrapped.put("error", wrapError(exception));
-                }
-                reply.reply(wrapped);
-              });
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      ArrayList<Object> args = (ArrayList<Object>) message;
+                      Number instanceIdArg = (Number) args.get(0);
+                      if (instanceIdArg == null) {
+                        throw new NullPointerException("instanceIdArg unexpectedly null.");
+                      }
+                      Boolean enabledArg = (Boolean) args.get(1);
+                      if (enabledArg == null) {
+                        throw new NullPointerException("enabledArg unexpectedly null.");
+                      }
+                      api.setAllowFileAccess(
+                              (instanceIdArg == null) ? null : instanceIdArg.longValue(), enabledArg);
+                      wrapped.put("result", null);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                    }
+                    reply.reply(wrapped);
+                  });
+        } else {
+          channel.setMessageHandler(null);
+        }
+      }
+      {
+        BasicMessageChannel<Object> channel =
+                new BasicMessageChannel<>(binaryMessenger, "dev.flutter.pigeon.WebSettingsHostApi.setGeolocationEnabled", getCodec());
+        if (api != null) {
+          channel.setMessageHandler((message, reply) -> {
+            Map<String, Object> wrapped = new HashMap<>();
+            try {
+              ArrayList<Object> args = (ArrayList<Object>)message;
+              Number instanceIdArg = (Number)args.get(0);
+              if (instanceIdArg == null) {
+                throw new NullPointerException("instanceIdArg unexpectedly null.");
+              }
+              Boolean enabledArg = (Boolean)args.get(1);
+              if (enabledArg == null) {
+                throw new NullPointerException("enabledArg unexpectedly null.");
+              }
+              api.setGeolocationEnabled(instanceIdArg.longValue(), enabledArg);
+              wrapped.put("result", null);
+            }
+            catch (Error | RuntimeException exception) {
+              wrapped.put("error", wrapError(exception));
+            }
+            reply.reply(wrapped);
+          });
         } else {
           channel.setMessageHandler(null);
         }
@@ -1743,7 +1773,7 @@ public class GeneratedAndroidWebView {
 
   private static class JavaScriptChannelHostApiCodec extends StandardMessageCodec {
     public static final JavaScriptChannelHostApiCodec INSTANCE =
-        new JavaScriptChannelHostApiCodec();
+            new JavaScriptChannelHostApiCodec();
 
     private JavaScriptChannelHostApiCodec() {}
   }
@@ -1764,30 +1794,30 @@ public class GeneratedAndroidWebView {
     static void setup(BinaryMessenger binaryMessenger, JavaScriptChannelHostApi api) {
       {
         BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger, "dev.flutter.pigeon.JavaScriptChannelHostApi.create", getCodec());
+                new BasicMessageChannel<>(
+                        binaryMessenger, "dev.flutter.pigeon.JavaScriptChannelHostApi.create", getCodec());
         if (api != null) {
           channel.setMessageHandler(
-              (message, reply) -> {
-                Map<String, Object> wrapped = new HashMap<>();
-                try {
-                  ArrayList<Object> args = (ArrayList<Object>) message;
-                  Number instanceIdArg = (Number) args.get(0);
-                  if (instanceIdArg == null) {
-                    throw new NullPointerException("instanceIdArg unexpectedly null.");
-                  }
-                  String channelNameArg = (String) args.get(1);
-                  if (channelNameArg == null) {
-                    throw new NullPointerException("channelNameArg unexpectedly null.");
-                  }
-                  api.create(
-                      (instanceIdArg == null) ? null : instanceIdArg.longValue(), channelNameArg);
-                  wrapped.put("result", null);
-                } catch (Error | RuntimeException exception) {
-                  wrapped.put("error", wrapError(exception));
-                }
-                reply.reply(wrapped);
-              });
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      ArrayList<Object> args = (ArrayList<Object>) message;
+                      Number instanceIdArg = (Number) args.get(0);
+                      if (instanceIdArg == null) {
+                        throw new NullPointerException("instanceIdArg unexpectedly null.");
+                      }
+                      String channelNameArg = (String) args.get(1);
+                      if (channelNameArg == null) {
+                        throw new NullPointerException("channelNameArg unexpectedly null.");
+                      }
+                      api.create(
+                              (instanceIdArg == null) ? null : instanceIdArg.longValue(), channelNameArg);
+                      wrapped.put("result", null);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                    }
+                    reply.reply(wrapped);
+                  });
         } else {
           channel.setMessageHandler(null);
         }
@@ -1797,7 +1827,7 @@ public class GeneratedAndroidWebView {
 
   private static class JavaScriptChannelFlutterApiCodec extends StandardMessageCodec {
     public static final JavaScriptChannelFlutterApiCodec INSTANCE =
-        new JavaScriptChannelFlutterApiCodec();
+            new JavaScriptChannelFlutterApiCodec();
 
     private JavaScriptChannelFlutterApiCodec() {}
   }
@@ -1820,29 +1850,29 @@ public class GeneratedAndroidWebView {
 
     public void dispose(@NonNull Long instanceIdArg, Reply<Void> callback) {
       BasicMessageChannel<Object> channel =
-          new BasicMessageChannel<>(
-              binaryMessenger,
-              "dev.flutter.pigeon.JavaScriptChannelFlutterApi.dispose",
-              getCodec());
+              new BasicMessageChannel<>(
+                      binaryMessenger,
+                      "dev.flutter.pigeon.JavaScriptChannelFlutterApi.dispose",
+                      getCodec());
       channel.send(
-          new ArrayList<Object>(Arrays.asList(instanceIdArg)),
-          channelReply -> {
-            callback.reply(null);
-          });
+              new ArrayList<Object>(Arrays.asList(instanceIdArg)),
+              channelReply -> {
+                callback.reply(null);
+              });
     }
 
     public void postMessage(
-        @NonNull Long instanceIdArg, @NonNull String messageArg, Reply<Void> callback) {
+            @NonNull Long instanceIdArg, @NonNull String messageArg, Reply<Void> callback) {
       BasicMessageChannel<Object> channel =
-          new BasicMessageChannel<>(
-              binaryMessenger,
-              "dev.flutter.pigeon.JavaScriptChannelFlutterApi.postMessage",
-              getCodec());
+              new BasicMessageChannel<>(
+                      binaryMessenger,
+                      "dev.flutter.pigeon.JavaScriptChannelFlutterApi.postMessage",
+                      getCodec());
       channel.send(
-          new ArrayList<Object>(Arrays.asList(instanceIdArg, messageArg)),
-          channelReply -> {
-            callback.reply(null);
-          });
+              new ArrayList<Object>(Arrays.asList(instanceIdArg, messageArg)),
+              channelReply -> {
+                callback.reply(null);
+              });
     }
   }
 
@@ -1868,32 +1898,32 @@ public class GeneratedAndroidWebView {
     static void setup(BinaryMessenger binaryMessenger, WebViewClientHostApi api) {
       {
         BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger, "dev.flutter.pigeon.WebViewClientHostApi.create", getCodec());
+                new BasicMessageChannel<>(
+                        binaryMessenger, "dev.flutter.pigeon.WebViewClientHostApi.create", getCodec());
         if (api != null) {
           channel.setMessageHandler(
-              (message, reply) -> {
-                Map<String, Object> wrapped = new HashMap<>();
-                try {
-                  ArrayList<Object> args = (ArrayList<Object>) message;
-                  Number instanceIdArg = (Number) args.get(0);
-                  if (instanceIdArg == null) {
-                    throw new NullPointerException("instanceIdArg unexpectedly null.");
-                  }
-                  Boolean shouldOverrideUrlLoadingArg = (Boolean) args.get(1);
-                  if (shouldOverrideUrlLoadingArg == null) {
-                    throw new NullPointerException(
-                        "shouldOverrideUrlLoadingArg unexpectedly null.");
-                  }
-                  api.create(
-                      (instanceIdArg == null) ? null : instanceIdArg.longValue(),
-                      shouldOverrideUrlLoadingArg);
-                  wrapped.put("result", null);
-                } catch (Error | RuntimeException exception) {
-                  wrapped.put("error", wrapError(exception));
-                }
-                reply.reply(wrapped);
-              });
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      ArrayList<Object> args = (ArrayList<Object>) message;
+                      Number instanceIdArg = (Number) args.get(0);
+                      if (instanceIdArg == null) {
+                        throw new NullPointerException("instanceIdArg unexpectedly null.");
+                      }
+                      Boolean shouldOverrideUrlLoadingArg = (Boolean) args.get(1);
+                      if (shouldOverrideUrlLoadingArg == null) {
+                        throw new NullPointerException(
+                                "shouldOverrideUrlLoadingArg unexpectedly null.");
+                      }
+                      api.create(
+                              (instanceIdArg == null) ? null : instanceIdArg.longValue(),
+                              shouldOverrideUrlLoadingArg);
+                      wrapped.put("result", null);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                    }
+                    reply.reply(wrapped);
+                  });
         } else {
           channel.setMessageHandler(null);
         }
@@ -1952,123 +1982,123 @@ public class GeneratedAndroidWebView {
 
     public void dispose(@NonNull Long instanceIdArg, Reply<Void> callback) {
       BasicMessageChannel<Object> channel =
-          new BasicMessageChannel<>(
-              binaryMessenger, "dev.flutter.pigeon.WebViewClientFlutterApi.dispose", getCodec());
+              new BasicMessageChannel<>(
+                      binaryMessenger, "dev.flutter.pigeon.WebViewClientFlutterApi.dispose", getCodec());
       channel.send(
-          new ArrayList<Object>(Arrays.asList(instanceIdArg)),
-          channelReply -> {
-            callback.reply(null);
-          });
+              new ArrayList<Object>(Arrays.asList(instanceIdArg)),
+              channelReply -> {
+                callback.reply(null);
+              });
     }
 
     public void onPageStarted(
-        @NonNull Long instanceIdArg,
-        @NonNull Long webViewInstanceIdArg,
-        @NonNull String urlArg,
-        Reply<Void> callback) {
+            @NonNull Long instanceIdArg,
+            @NonNull Long webViewInstanceIdArg,
+            @NonNull String urlArg,
+            Reply<Void> callback) {
       BasicMessageChannel<Object> channel =
-          new BasicMessageChannel<>(
-              binaryMessenger,
-              "dev.flutter.pigeon.WebViewClientFlutterApi.onPageStarted",
-              getCodec());
+              new BasicMessageChannel<>(
+                      binaryMessenger,
+                      "dev.flutter.pigeon.WebViewClientFlutterApi.onPageStarted",
+                      getCodec());
       channel.send(
-          new ArrayList<Object>(Arrays.asList(instanceIdArg, webViewInstanceIdArg, urlArg)),
-          channelReply -> {
-            callback.reply(null);
-          });
+              new ArrayList<Object>(Arrays.asList(instanceIdArg, webViewInstanceIdArg, urlArg)),
+              channelReply -> {
+                callback.reply(null);
+              });
     }
 
     public void onPageFinished(
-        @NonNull Long instanceIdArg,
-        @NonNull Long webViewInstanceIdArg,
-        @NonNull String urlArg,
-        Reply<Void> callback) {
+            @NonNull Long instanceIdArg,
+            @NonNull Long webViewInstanceIdArg,
+            @NonNull String urlArg,
+            Reply<Void> callback) {
       BasicMessageChannel<Object> channel =
-          new BasicMessageChannel<>(
-              binaryMessenger,
-              "dev.flutter.pigeon.WebViewClientFlutterApi.onPageFinished",
-              getCodec());
+              new BasicMessageChannel<>(
+                      binaryMessenger,
+                      "dev.flutter.pigeon.WebViewClientFlutterApi.onPageFinished",
+                      getCodec());
       channel.send(
-          new ArrayList<Object>(Arrays.asList(instanceIdArg, webViewInstanceIdArg, urlArg)),
-          channelReply -> {
-            callback.reply(null);
-          });
+              new ArrayList<Object>(Arrays.asList(instanceIdArg, webViewInstanceIdArg, urlArg)),
+              channelReply -> {
+                callback.reply(null);
+              });
     }
 
     public void onReceivedRequestError(
-        @NonNull Long instanceIdArg,
-        @NonNull Long webViewInstanceIdArg,
-        @NonNull WebResourceRequestData requestArg,
-        @NonNull WebResourceErrorData errorArg,
-        Reply<Void> callback) {
+            @NonNull Long instanceIdArg,
+            @NonNull Long webViewInstanceIdArg,
+            @NonNull WebResourceRequestData requestArg,
+            @NonNull WebResourceErrorData errorArg,
+            Reply<Void> callback) {
       BasicMessageChannel<Object> channel =
-          new BasicMessageChannel<>(
-              binaryMessenger,
-              "dev.flutter.pigeon.WebViewClientFlutterApi.onReceivedRequestError",
-              getCodec());
+              new BasicMessageChannel<>(
+                      binaryMessenger,
+                      "dev.flutter.pigeon.WebViewClientFlutterApi.onReceivedRequestError",
+                      getCodec());
       channel.send(
-          new ArrayList<Object>(
-              Arrays.asList(instanceIdArg, webViewInstanceIdArg, requestArg, errorArg)),
-          channelReply -> {
-            callback.reply(null);
-          });
+              new ArrayList<Object>(
+                      Arrays.asList(instanceIdArg, webViewInstanceIdArg, requestArg, errorArg)),
+              channelReply -> {
+                callback.reply(null);
+              });
     }
 
     public void onReceivedError(
-        @NonNull Long instanceIdArg,
-        @NonNull Long webViewInstanceIdArg,
-        @NonNull Long errorCodeArg,
-        @NonNull String descriptionArg,
-        @NonNull String failingUrlArg,
-        Reply<Void> callback) {
+            @NonNull Long instanceIdArg,
+            @NonNull Long webViewInstanceIdArg,
+            @NonNull Long errorCodeArg,
+            @NonNull String descriptionArg,
+            @NonNull String failingUrlArg,
+            Reply<Void> callback) {
       BasicMessageChannel<Object> channel =
-          new BasicMessageChannel<>(
-              binaryMessenger,
-              "dev.flutter.pigeon.WebViewClientFlutterApi.onReceivedError",
-              getCodec());
+              new BasicMessageChannel<>(
+                      binaryMessenger,
+                      "dev.flutter.pigeon.WebViewClientFlutterApi.onReceivedError",
+                      getCodec());
       channel.send(
-          new ArrayList<Object>(
-              Arrays.asList(
-                  instanceIdArg,
-                  webViewInstanceIdArg,
-                  errorCodeArg,
-                  descriptionArg,
-                  failingUrlArg)),
-          channelReply -> {
-            callback.reply(null);
-          });
+              new ArrayList<Object>(
+                      Arrays.asList(
+                              instanceIdArg,
+                              webViewInstanceIdArg,
+                              errorCodeArg,
+                              descriptionArg,
+                              failingUrlArg)),
+              channelReply -> {
+                callback.reply(null);
+              });
     }
 
     public void requestLoading(
-        @NonNull Long instanceIdArg,
-        @NonNull Long webViewInstanceIdArg,
-        @NonNull WebResourceRequestData requestArg,
-        Reply<Void> callback) {
+            @NonNull Long instanceIdArg,
+            @NonNull Long webViewInstanceIdArg,
+            @NonNull WebResourceRequestData requestArg,
+            Reply<Void> callback) {
       BasicMessageChannel<Object> channel =
-          new BasicMessageChannel<>(
-              binaryMessenger,
-              "dev.flutter.pigeon.WebViewClientFlutterApi.requestLoading",
-              getCodec());
+              new BasicMessageChannel<>(
+                      binaryMessenger,
+                      "dev.flutter.pigeon.WebViewClientFlutterApi.requestLoading",
+                      getCodec());
       channel.send(
-          new ArrayList<Object>(Arrays.asList(instanceIdArg, webViewInstanceIdArg, requestArg)),
-          channelReply -> {
-            callback.reply(null);
-          });
+              new ArrayList<Object>(Arrays.asList(instanceIdArg, webViewInstanceIdArg, requestArg)),
+              channelReply -> {
+                callback.reply(null);
+              });
     }
 
     public void urlLoading(
-        @NonNull Long instanceIdArg,
-        @NonNull Long webViewInstanceIdArg,
-        @NonNull String urlArg,
-        Reply<Void> callback) {
+            @NonNull Long instanceIdArg,
+            @NonNull Long webViewInstanceIdArg,
+            @NonNull String urlArg,
+            Reply<Void> callback) {
       BasicMessageChannel<Object> channel =
-          new BasicMessageChannel<>(
-              binaryMessenger, "dev.flutter.pigeon.WebViewClientFlutterApi.urlLoading", getCodec());
+              new BasicMessageChannel<>(
+                      binaryMessenger, "dev.flutter.pigeon.WebViewClientFlutterApi.urlLoading", getCodec());
       channel.send(
-          new ArrayList<Object>(Arrays.asList(instanceIdArg, webViewInstanceIdArg, urlArg)),
-          channelReply -> {
-            callback.reply(null);
-          });
+              new ArrayList<Object>(Arrays.asList(instanceIdArg, webViewInstanceIdArg, urlArg)),
+              channelReply -> {
+                callback.reply(null);
+              });
     }
   }
 
@@ -2094,25 +2124,25 @@ public class GeneratedAndroidWebView {
     static void setup(BinaryMessenger binaryMessenger, DownloadListenerHostApi api) {
       {
         BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger, "dev.flutter.pigeon.DownloadListenerHostApi.create", getCodec());
+                new BasicMessageChannel<>(
+                        binaryMessenger, "dev.flutter.pigeon.DownloadListenerHostApi.create", getCodec());
         if (api != null) {
           channel.setMessageHandler(
-              (message, reply) -> {
-                Map<String, Object> wrapped = new HashMap<>();
-                try {
-                  ArrayList<Object> args = (ArrayList<Object>) message;
-                  Number instanceIdArg = (Number) args.get(0);
-                  if (instanceIdArg == null) {
-                    throw new NullPointerException("instanceIdArg unexpectedly null.");
-                  }
-                  api.create((instanceIdArg == null) ? null : instanceIdArg.longValue());
-                  wrapped.put("result", null);
-                } catch (Error | RuntimeException exception) {
-                  wrapped.put("error", wrapError(exception));
-                }
-                reply.reply(wrapped);
-              });
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      ArrayList<Object> args = (ArrayList<Object>) message;
+                      Number instanceIdArg = (Number) args.get(0);
+                      if (instanceIdArg == null) {
+                        throw new NullPointerException("instanceIdArg unexpectedly null.");
+                      }
+                      api.create((instanceIdArg == null) ? null : instanceIdArg.longValue());
+                      wrapped.put("result", null);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                    }
+                    reply.reply(wrapped);
+                  });
         } else {
           channel.setMessageHandler(null);
         }
@@ -2122,7 +2152,7 @@ public class GeneratedAndroidWebView {
 
   private static class DownloadListenerFlutterApiCodec extends StandardMessageCodec {
     public static final DownloadListenerFlutterApiCodec INSTANCE =
-        new DownloadListenerFlutterApiCodec();
+            new DownloadListenerFlutterApiCodec();
 
     private DownloadListenerFlutterApiCodec() {}
   }
@@ -2145,40 +2175,40 @@ public class GeneratedAndroidWebView {
 
     public void dispose(@NonNull Long instanceIdArg, Reply<Void> callback) {
       BasicMessageChannel<Object> channel =
-          new BasicMessageChannel<>(
-              binaryMessenger, "dev.flutter.pigeon.DownloadListenerFlutterApi.dispose", getCodec());
+              new BasicMessageChannel<>(
+                      binaryMessenger, "dev.flutter.pigeon.DownloadListenerFlutterApi.dispose", getCodec());
       channel.send(
-          new ArrayList<Object>(Arrays.asList(instanceIdArg)),
-          channelReply -> {
-            callback.reply(null);
-          });
+              new ArrayList<Object>(Arrays.asList(instanceIdArg)),
+              channelReply -> {
+                callback.reply(null);
+              });
     }
 
     public void onDownloadStart(
-        @NonNull Long instanceIdArg,
-        @NonNull String urlArg,
-        @NonNull String userAgentArg,
-        @NonNull String contentDispositionArg,
-        @NonNull String mimetypeArg,
-        @NonNull Long contentLengthArg,
-        Reply<Void> callback) {
+            @NonNull Long instanceIdArg,
+            @NonNull String urlArg,
+            @NonNull String userAgentArg,
+            @NonNull String contentDispositionArg,
+            @NonNull String mimetypeArg,
+            @NonNull Long contentLengthArg,
+            Reply<Void> callback) {
       BasicMessageChannel<Object> channel =
-          new BasicMessageChannel<>(
-              binaryMessenger,
-              "dev.flutter.pigeon.DownloadListenerFlutterApi.onDownloadStart",
-              getCodec());
+              new BasicMessageChannel<>(
+                      binaryMessenger,
+                      "dev.flutter.pigeon.DownloadListenerFlutterApi.onDownloadStart",
+                      getCodec());
       channel.send(
-          new ArrayList<Object>(
-              Arrays.asList(
-                  instanceIdArg,
-                  urlArg,
-                  userAgentArg,
-                  contentDispositionArg,
-                  mimetypeArg,
-                  contentLengthArg)),
-          channelReply -> {
-            callback.reply(null);
-          });
+              new ArrayList<Object>(
+                      Arrays.asList(
+                              instanceIdArg,
+                              urlArg,
+                              userAgentArg,
+                              contentDispositionArg,
+                              mimetypeArg,
+                              contentLengthArg)),
+              channelReply -> {
+                callback.reply(null);
+              });
     }
   }
 
@@ -2204,33 +2234,33 @@ public class GeneratedAndroidWebView {
     static void setup(BinaryMessenger binaryMessenger, WebChromeClientHostApi api) {
       {
         BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger, "dev.flutter.pigeon.WebChromeClientHostApi.create", getCodec());
+                new BasicMessageChannel<>(
+                        binaryMessenger, "dev.flutter.pigeon.WebChromeClientHostApi.create", getCodec());
         if (api != null) {
           channel.setMessageHandler(
-              (message, reply) -> {
-                Map<String, Object> wrapped = new HashMap<>();
-                try {
-                  ArrayList<Object> args = (ArrayList<Object>) message;
-                  Number instanceIdArg = (Number) args.get(0);
-                  if (instanceIdArg == null) {
-                    throw new NullPointerException("instanceIdArg unexpectedly null.");
-                  }
-                  Number webViewClientInstanceIdArg = (Number) args.get(1);
-                  if (webViewClientInstanceIdArg == null) {
-                    throw new NullPointerException("webViewClientInstanceIdArg unexpectedly null.");
-                  }
-                  api.create(
-                      (instanceIdArg == null) ? null : instanceIdArg.longValue(),
-                      (webViewClientInstanceIdArg == null)
-                          ? null
-                          : webViewClientInstanceIdArg.longValue());
-                  wrapped.put("result", null);
-                } catch (Error | RuntimeException exception) {
-                  wrapped.put("error", wrapError(exception));
-                }
-                reply.reply(wrapped);
-              });
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      ArrayList<Object> args = (ArrayList<Object>) message;
+                      Number instanceIdArg = (Number) args.get(0);
+                      if (instanceIdArg == null) {
+                        throw new NullPointerException("instanceIdArg unexpectedly null.");
+                      }
+                      Number webViewClientInstanceIdArg = (Number) args.get(1);
+                      if (webViewClientInstanceIdArg == null) {
+                        throw new NullPointerException("webViewClientInstanceIdArg unexpectedly null.");
+                      }
+                      api.create(
+                              (instanceIdArg == null) ? null : instanceIdArg.longValue(),
+                              (webViewClientInstanceIdArg == null)
+                                      ? null
+                                      : webViewClientInstanceIdArg.longValue());
+                      wrapped.put("result", null);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                    }
+                    reply.reply(wrapped);
+                  });
         } else {
           channel.setMessageHandler(null);
         }
@@ -2240,7 +2270,7 @@ public class GeneratedAndroidWebView {
 
   private static class FlutterAssetManagerHostApiCodec extends StandardMessageCodec {
     public static final FlutterAssetManagerHostApiCodec INSTANCE =
-        new FlutterAssetManagerHostApiCodec();
+            new FlutterAssetManagerHostApiCodec();
 
     private FlutterAssetManagerHostApiCodec() {}
   }
@@ -2265,52 +2295,52 @@ public class GeneratedAndroidWebView {
     static void setup(BinaryMessenger binaryMessenger, FlutterAssetManagerHostApi api) {
       {
         BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger, "dev.flutter.pigeon.FlutterAssetManagerHostApi.list", getCodec());
+                new BasicMessageChannel<>(
+                        binaryMessenger, "dev.flutter.pigeon.FlutterAssetManagerHostApi.list", getCodec());
         if (api != null) {
           channel.setMessageHandler(
-              (message, reply) -> {
-                Map<String, Object> wrapped = new HashMap<>();
-                try {
-                  ArrayList<Object> args = (ArrayList<Object>) message;
-                  String pathArg = (String) args.get(0);
-                  if (pathArg == null) {
-                    throw new NullPointerException("pathArg unexpectedly null.");
-                  }
-                  List<String> output = api.list(pathArg);
-                  wrapped.put("result", output);
-                } catch (Error | RuntimeException exception) {
-                  wrapped.put("error", wrapError(exception));
-                }
-                reply.reply(wrapped);
-              });
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      ArrayList<Object> args = (ArrayList<Object>) message;
+                      String pathArg = (String) args.get(0);
+                      if (pathArg == null) {
+                        throw new NullPointerException("pathArg unexpectedly null.");
+                      }
+                      List<String> output = api.list(pathArg);
+                      wrapped.put("result", output);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                    }
+                    reply.reply(wrapped);
+                  });
         } else {
           channel.setMessageHandler(null);
         }
       }
       {
         BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger,
-                "dev.flutter.pigeon.FlutterAssetManagerHostApi.getAssetFilePathByName",
-                getCodec());
+                new BasicMessageChannel<>(
+                        binaryMessenger,
+                        "dev.flutter.pigeon.FlutterAssetManagerHostApi.getAssetFilePathByName",
+                        getCodec());
         if (api != null) {
           channel.setMessageHandler(
-              (message, reply) -> {
-                Map<String, Object> wrapped = new HashMap<>();
-                try {
-                  ArrayList<Object> args = (ArrayList<Object>) message;
-                  String nameArg = (String) args.get(0);
-                  if (nameArg == null) {
-                    throw new NullPointerException("nameArg unexpectedly null.");
-                  }
-                  String output = api.getAssetFilePathByName(nameArg);
-                  wrapped.put("result", output);
-                } catch (Error | RuntimeException exception) {
-                  wrapped.put("error", wrapError(exception));
-                }
-                reply.reply(wrapped);
-              });
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      ArrayList<Object> args = (ArrayList<Object>) message;
+                      String nameArg = (String) args.get(0);
+                      if (nameArg == null) {
+                        throw new NullPointerException("nameArg unexpectedly null.");
+                      }
+                      String output = api.getAssetFilePathByName(nameArg);
+                      wrapped.put("result", output);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                    }
+                    reply.reply(wrapped);
+                  });
         } else {
           channel.setMessageHandler(null);
         }
@@ -2320,7 +2350,7 @@ public class GeneratedAndroidWebView {
 
   private static class WebChromeClientFlutterApiCodec extends StandardMessageCodec {
     public static final WebChromeClientFlutterApiCodec INSTANCE =
-        new WebChromeClientFlutterApiCodec();
+            new WebChromeClientFlutterApiCodec();
 
     private WebChromeClientFlutterApiCodec() {}
   }
@@ -2343,30 +2373,30 @@ public class GeneratedAndroidWebView {
 
     public void dispose(@NonNull Long instanceIdArg, Reply<Void> callback) {
       BasicMessageChannel<Object> channel =
-          new BasicMessageChannel<>(
-              binaryMessenger, "dev.flutter.pigeon.WebChromeClientFlutterApi.dispose", getCodec());
+              new BasicMessageChannel<>(
+                      binaryMessenger, "dev.flutter.pigeon.WebChromeClientFlutterApi.dispose", getCodec());
       channel.send(
-          new ArrayList<Object>(Arrays.asList(instanceIdArg)),
-          channelReply -> {
-            callback.reply(null);
-          });
+              new ArrayList<Object>(Arrays.asList(instanceIdArg)),
+              channelReply -> {
+                callback.reply(null);
+              });
     }
 
     public void onProgressChanged(
-        @NonNull Long instanceIdArg,
-        @NonNull Long webViewInstanceIdArg,
-        @NonNull Long progressArg,
-        Reply<Void> callback) {
+            @NonNull Long instanceIdArg,
+            @NonNull Long webViewInstanceIdArg,
+            @NonNull Long progressArg,
+            Reply<Void> callback) {
       BasicMessageChannel<Object> channel =
-          new BasicMessageChannel<>(
-              binaryMessenger,
-              "dev.flutter.pigeon.WebChromeClientFlutterApi.onProgressChanged",
-              getCodec());
+              new BasicMessageChannel<>(
+                      binaryMessenger,
+                      "dev.flutter.pigeon.WebChromeClientFlutterApi.onProgressChanged",
+                      getCodec());
       channel.send(
-          new ArrayList<Object>(Arrays.asList(instanceIdArg, webViewInstanceIdArg, progressArg)),
-          channelReply -> {
-            callback.reply(null);
-          });
+              new ArrayList<Object>(Arrays.asList(instanceIdArg, webViewInstanceIdArg, progressArg)),
+              channelReply -> {
+                callback.reply(null);
+              });
     }
   }
 
@@ -2393,50 +2423,50 @@ public class GeneratedAndroidWebView {
     static void setup(BinaryMessenger binaryMessenger, WebStorageHostApi api) {
       {
         BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger, "dev.flutter.pigeon.WebStorageHostApi.create", getCodec());
+                new BasicMessageChannel<>(
+                        binaryMessenger, "dev.flutter.pigeon.WebStorageHostApi.create", getCodec());
         if (api != null) {
           channel.setMessageHandler(
-              (message, reply) -> {
-                Map<String, Object> wrapped = new HashMap<>();
-                try {
-                  ArrayList<Object> args = (ArrayList<Object>) message;
-                  Number instanceIdArg = (Number) args.get(0);
-                  if (instanceIdArg == null) {
-                    throw new NullPointerException("instanceIdArg unexpectedly null.");
-                  }
-                  api.create((instanceIdArg == null) ? null : instanceIdArg.longValue());
-                  wrapped.put("result", null);
-                } catch (Error | RuntimeException exception) {
-                  wrapped.put("error", wrapError(exception));
-                }
-                reply.reply(wrapped);
-              });
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      ArrayList<Object> args = (ArrayList<Object>) message;
+                      Number instanceIdArg = (Number) args.get(0);
+                      if (instanceIdArg == null) {
+                        throw new NullPointerException("instanceIdArg unexpectedly null.");
+                      }
+                      api.create((instanceIdArg == null) ? null : instanceIdArg.longValue());
+                      wrapped.put("result", null);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                    }
+                    reply.reply(wrapped);
+                  });
         } else {
           channel.setMessageHandler(null);
         }
       }
       {
         BasicMessageChannel<Object> channel =
-            new BasicMessageChannel<>(
-                binaryMessenger, "dev.flutter.pigeon.WebStorageHostApi.deleteAllData", getCodec());
+                new BasicMessageChannel<>(
+                        binaryMessenger, "dev.flutter.pigeon.WebStorageHostApi.deleteAllData", getCodec());
         if (api != null) {
           channel.setMessageHandler(
-              (message, reply) -> {
-                Map<String, Object> wrapped = new HashMap<>();
-                try {
-                  ArrayList<Object> args = (ArrayList<Object>) message;
-                  Number instanceIdArg = (Number) args.get(0);
-                  if (instanceIdArg == null) {
-                    throw new NullPointerException("instanceIdArg unexpectedly null.");
-                  }
-                  api.deleteAllData((instanceIdArg == null) ? null : instanceIdArg.longValue());
-                  wrapped.put("result", null);
-                } catch (Error | RuntimeException exception) {
-                  wrapped.put("error", wrapError(exception));
-                }
-                reply.reply(wrapped);
-              });
+                  (message, reply) -> {
+                    Map<String, Object> wrapped = new HashMap<>();
+                    try {
+                      ArrayList<Object> args = (ArrayList<Object>) message;
+                      Number instanceIdArg = (Number) args.get(0);
+                      if (instanceIdArg == null) {
+                        throw new NullPointerException("instanceIdArg unexpectedly null.");
+                      }
+                      api.deleteAllData((instanceIdArg == null) ? null : instanceIdArg.longValue());
+                      wrapped.put("result", null);
+                    } catch (Error | RuntimeException exception) {
+                      wrapped.put("error", wrapError(exception));
+                    }
+                    reply.reply(wrapped);
+                  });
         } else {
           channel.setMessageHandler(null);
         }
@@ -2449,8 +2479,8 @@ public class GeneratedAndroidWebView {
     errorMap.put("message", exception.toString());
     errorMap.put("code", exception.getClass().getSimpleName());
     errorMap.put(
-        "details",
-        "Cause: " + exception.getCause() + ", Stacktrace: " + Log.getStackTraceString(exception));
+            "details",
+            "Cause: " + exception.getCause() + ", Stacktrace: " + Log.getStackTraceString(exception));
     return errorMap;
   }
 }

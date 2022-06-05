@@ -20,8 +20,9 @@ flutter:
 dependencies:
   flutter:
     sdk: flutter
-  webview_pro_platform_interface: ^1.9.0
-#    path: ../webview_flutter_platform_interface
+#  webview_pro_platform_interface: ^1.9.0
+  webview_pro_platform_interface:
+    path: ../webview_flutter_platform_interface
 
 dev_dependencies:
   build_runner: ^2.1.4
