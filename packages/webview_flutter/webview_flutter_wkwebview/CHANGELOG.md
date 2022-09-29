@@ -1,3 +1,7 @@
+## 2.7.1+3
+
+* Fix iOS import issue in Flutter project ([#18](https://github.com/wenzhiming/flutter-plugins/pull/18))
+
 ## 2.7.1+2
 
 * fixed some imports on webview-umbrella
