@@ -1,3 +1,7 @@
+## 3.0.1+4
+
+* Updates to webview_flutter_wkwebview version 2.7.1+3.
+
 ## 3.0.1+3
 
 * update dependency to webview_pro_wkwebview plugins to solve the problem of 3.0.1+2 running failure
