@@ -10,7 +10,8 @@
 @interface TranslatorTest : XCTestCase
 
 @property(strong, nonatomic) NSDictionary *periodMap;
-@property(strong, nonatomic) NSDictionary *discountMap;
+@property(strong, nonatomic) NSMutableDictionary *discountMap;
+@property(strong, nonatomic) NSMutableDictionary *discountMissingIdentifierMap;
 @property(strong, nonatomic) NSMutableDictionary *productMap;
 @property(strong, nonatomic) NSDictionary *productResponseMap;
 @property(strong, nonatomic) NSDictionary *paymentMap;
@@ -27,13 +28,27 @@
 
 - (void)setUp {
   self.periodMap = @{@"numberOfUnits" : @(0), @"unit" : @(0)};
-  self.discountMap = @{
+
+  self.discountMap = [[NSMutableDictionary alloc] initWithDictionary:@{
     @"price" : @"1",
     @"priceLocale" : [FIAObjectTranslator getMapFromNSLocale:NSLocale.systemLocale],
     @"numberOfPeriods" : @1,
     @"subscriptionPeriod" : self.periodMap,
-    @"paymentMode" : @1
-  };
+    @"paymentMode" : @1,
+  }];
+  if (@available(iOS 12.2, *)) {
+    self.discountMap[@"identifier"] = @"test offer id";
+    self.discountMap[@"type"] = @(SKProductDiscountTypeIntroductory);
+  }
+  self.discountMissingIdentifierMap = [[NSMutableDictionary alloc] initWithDictionary:@{
+    @"price" : @"1",
+    @"priceLocale" : [FIAObjectTranslator getMapFromNSLocale:NSLocale.systemLocale],
+    @"numberOfPeriods" : @1,
+    @"subscriptionPeriod" : self.periodMap,
+    @"paymentMode" : @1,
+    @"identifier" : [NSNull null],
+    @"type" : @0,
+  }];
 
   self.productMap = [[NSMutableDictionary alloc] initWithDictionary:@{
     @"price" : @"1",
@@ -158,6 +173,56 @@
   XCTAssertEqualObjects(map, self.errorMap);
 }
 
+- (void)testErrorWithNSNumberAsUserInfo {
+  NSError *error = [NSError errorWithDomain:SKErrorDomain code:3 userInfo:@{@"key" : @42}];
+  NSDictionary *expectedMap =
+      @{@"domain" : SKErrorDomain, @"code" : @3, @"userInfo" : @{@"key" : @42}};
+  NSDictionary *map = [FIAObjectTranslator getMapFromNSError:error];
+  XCTAssertEqualObjects(expectedMap, map);
+}
+
+- (void)testErrorWithMultipleUnderlyingErrors {
+  NSError *underlyingErrorOne = [NSError errorWithDomain:SKErrorDomain code:2 userInfo:nil];
+  NSError *underlyingErrorTwo = [NSError errorWithDomain:SKErrorDomain code:1 userInfo:nil];
+  NSError *mainError = [NSError
+      errorWithDomain:SKErrorDomain
+                 code:3
+             userInfo:@{@"underlyingErrors" : @[ underlyingErrorOne, underlyingErrorTwo ]}];
+  NSDictionary *expectedMap = @{
+    @"domain" : SKErrorDomain,
+    @"code" : @3,
+    @"userInfo" : @{
+      @"underlyingErrors" : @[
+        @{@"domain" : SKErrorDomain, @"code" : @2, @"userInfo" : @{}},
+        @{@"domain" : SKErrorDomain, @"code" : @1, @"userInfo" : @{}}
+      ]
+    }
+  };
+  NSDictionary *map = [FIAObjectTranslator getMapFromNSError:mainError];
+  XCTAssertEqualObjects(expectedMap, map);
+}
+
+- (void)testErrorWithUnsupportedUserInfo {
+  NSError *error = [NSError errorWithDomain:SKErrorDomain
+                                       code:3
+                                   userInfo:@{@"user_info" : [[NSObject alloc] init]}];
+  NSDictionary *expectedMap = @{
+    @"domain" : SKErrorDomain,
+    @"code" : @3,
+    @"userInfo" : @{
+      @"user_info" : [NSString
+          stringWithFormat:
+              @"Unable to encode native userInfo object of type %@ to map. Please submit an "
+              @"issue at https://github.com/flutter/flutter/issues/new with the title "
+              @"\"[in_app_purchase_storekit] Unable to encode userInfo of type %@\" and add "
+              @"reproduction steps and the error details in the description field.",
+              [NSObject class], [NSObject class]]
+    }
+  };
+  NSDictionary *map = [FIAObjectTranslator getMapFromNSError:error];
+  XCTAssertEqualObjects(expectedMap, map);
+}
+
 - (void)testLocaleToMap {
   if (@available(iOS 10.0, *)) {
     NSLocale *system = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
@@ -221,6 +286,15 @@
       XCTAssertEqualObjects(
           error, @"When specifying a payment discount the 'identifier' field is mandatory.");
     }
+  }
+}
+
+- (void)testGetMapFromSKProductDiscountMissingIdentifier {
+  if (@available(iOS 12.2, *)) {
+    SKProductDiscountStub *discount =
+        [[SKProductDiscountStub alloc] initWithMap:self.discountMissingIdentifierMap];
+    NSDictionary *map = [FIAObjectTranslator getMapFromSKProductDiscount:discount];
+    XCTAssertEqualObjects(map, self.discountMissingIdentifierMap);
   }
 }
 
@@ -313,6 +387,29 @@
       XCTAssertEqualObjects(
           error, @"When specifying a payment discount the 'timestamp' field is mandatory.");
     }
+  }
+}
+
+- (void)testSKPaymentDiscountFromMapOverflowingTimestamp {
+  if (@available(iOS 12.2, *)) {
+    NSDictionary *discountMap = @{
+      @"identifier" : @"payment_discount_identifier",
+      @"keyIdentifier" : @"payment_discount_key_identifier",
+      @"nonce" : @"d18981e0-9003-4365-98a2-4b90e3b62c52",
+      @"signature" : @"this is a encrypted signature",
+      @"timestamp" : @1665044583595,  // timestamp 2022 Oct
+    };
+    NSString *error = nil;
+    SKPaymentDiscount *paymentDiscount =
+        [FIAObjectTranslator getSKPaymentDiscountFromMap:discountMap withError:&error];
+    XCTAssertNil(error);
+    XCTAssertNotNil(paymentDiscount);
+    XCTAssertEqual(paymentDiscount.identifier, discountMap[@"identifier"]);
+    XCTAssertEqual(paymentDiscount.keyIdentifier, discountMap[@"keyIdentifier"]);
+    XCTAssertEqualObjects(paymentDiscount.nonce,
+                          [[NSUUID alloc] initWithUUIDString:discountMap[@"nonce"]]);
+    XCTAssertEqual(paymentDiscount.signature, discountMap[@"signature"]);
+    XCTAssertEqual(paymentDiscount.timestamp, discountMap[@"timestamp"]);
   }
 }
 

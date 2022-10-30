@@ -1,3 +1,34 @@
+## 0.8.6
+
+* Updates minimum Flutter version to 2.10.
+* Fixes avoid_redundant_argument_values lint warnings and minor typos.
+* Adds `requestFullMetadata` option to `pickImage`, so images on iOS can be picked without `Photo Library Usage` permission.
+
+## 0.8.5+3
+
+* Adds argument error assertions to the app-facing package, to ensure
+  consistency across platform implementations.
+* Updates tests to use a mock platform instead of relying on default
+  method channel implementation internals.
+
+## 0.8.5+2
+
+* Minor fixes for new analysis options.
+
+## 0.8.5+1
+
+* Fixes library_private_types_in_public_api, sort_child_properties_last and use_key_in_widget_constructors
+  lint warnings.
+
+## 0.8.5
+
+* Moves Android and iOS implementations to federated packages.
+* Adds OS version support information to README.
+
+## 0.8.4+11
+
+* Fixes Activity leak.
+
 ## 0.8.4+10
 
 * iOS: allows picking images with WebP format.

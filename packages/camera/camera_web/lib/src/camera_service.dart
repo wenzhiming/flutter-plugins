@@ -3,14 +3,17 @@
 // found in the LICENSE file.
 
 import 'dart:html' as html;
+// TODO(a14n): remove this import once Flutter 3.1 or later reaches stable (including flutter/flutter#106316)
+// ignore: unnecessary_import
 import 'dart:ui';
 
 import 'package:camera_platform_interface/camera_platform_interface.dart';
-import 'package:camera_web/src/camera.dart';
-import 'package:camera_web/src/shims/dart_js_util.dart';
-import 'package:camera_web/src/types/types.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+
+import 'camera.dart';
+import 'shims/dart_js_util.dart';
+import 'types/types.dart';
 
 /// A service to fetch, map camera settings and
 /// obtain the camera stream.
@@ -82,7 +85,7 @@ class CameraService {
           throw CameraWebException(
             cameraId,
             CameraErrorCode.type,
-            'The camera options are incorrect or attempted'
+            'The camera options are incorrect or attempted '
             'to access the media input from an insecure context.',
           );
         case 'AbortError':

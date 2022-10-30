@@ -21,6 +21,7 @@ import io.flutter.plugins.webviewflutter.WebChromeClientHostApiImpl.WebChromeCli
 import io.flutter.plugins.webviewflutter.WebViewClientHostApiImpl.ReleasableWebViewClient;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Host api implementation for {@link WebView}.
@@ -28,11 +29,6 @@ import java.util.Map;
  * <p>Handles creating {@link WebView}s that intercommunicate with a paired Dart object.
  */
 public class WebViewHostApiImpl implements WebViewHostApi {
-  // TODO(bparrishMines): This can be removed once pigeon supports null values: https://github.com/flutter/flutter/issues/59118
-  // Workaround to represent null Strings since pigeon doesn't support null
-  // values.
-  private static final String nullStringIdentifier = "<null-value>";
-
   private final InstanceManager instanceManager;
   private final WebViewProxy webViewProxy;
   // Only used with WebView using virtual displays.
@@ -340,7 +336,7 @@ public class WebViewHostApiImpl implements WebViewHostApi {
             : webViewProxy.createInputAwareWebView(context, containerView);
 
     displayListenerProxy.onPostWebViewInitialization(displayManager);
-    instanceManager.addInstance(webView, instanceId);
+    instanceManager.addDartCreatedInstance(webView, instanceId);
   }
 
   @Override
@@ -348,15 +344,14 @@ public class WebViewHostApiImpl implements WebViewHostApi {
     final WebView instance = (WebView) instanceManager.getInstance(instanceId);
     if (instance != null) {
       ((Releasable) instance).release();
-      instanceManager.removeInstance(instance);
+      instanceManager.remove(instanceId);
     }
   }
 
   @Override
   public void loadData(Long instanceId, String data, String mimeType, String encoding) {
     final WebView webView = (WebView) instanceManager.getInstance(instanceId);
-    webView.loadData(
-        data, parseNullStringIdentifier(mimeType), parseNullStringIdentifier(encoding));
+    webView.loadData(data, mimeType, encoding);
   }
 
   @Override
@@ -368,12 +363,7 @@ public class WebViewHostApiImpl implements WebViewHostApi {
       String encoding,
       String historyUrl) {
     final WebView webView = (WebView) instanceManager.getInstance(instanceId);
-    webView.loadDataWithBaseURL(
-        parseNullStringIdentifier(baseUrl),
-        data,
-        parseNullStringIdentifier(mimeType),
-        parseNullStringIdentifier(encoding),
-        parseNullStringIdentifier(historyUrl));
+    webView.loadDataWithBaseURL(baseUrl, data, mimeType, encoding, historyUrl);
   }
 
   @Override
@@ -391,8 +381,7 @@ public class WebViewHostApiImpl implements WebViewHostApi {
   @Override
   public String getUrl(Long instanceId) {
     final WebView webView = (WebView) instanceManager.getInstance(instanceId);
-    final String result = webView.getUrl();
-    return result != null ? result : nullStringIdentifier;
+    return webView.getUrl();
   }
 
   @Override
@@ -441,8 +430,7 @@ public class WebViewHostApiImpl implements WebViewHostApi {
   @Override
   public String getTitle(Long instanceId) {
     final WebView webView = (WebView) instanceManager.getInstance(instanceId);
-    final String result = webView.getTitle();
-    return result != null ? result : nullStringIdentifier;
+    return webView.getTitle();
   }
 
   @Override
@@ -467,6 +455,16 @@ public class WebViewHostApiImpl implements WebViewHostApi {
   public Long getScrollY(Long instanceId) {
     final WebView webView = (WebView) instanceManager.getInstance(instanceId);
     return (long) webView.getScrollY();
+  }
+
+  @NonNull
+  @Override
+  public GeneratedAndroidWebView.WebViewPoint getScrollPosition(@NonNull Long instanceId) {
+    final WebView webView = Objects.requireNonNull(instanceManager.getInstance(instanceId));
+    return new GeneratedAndroidWebView.WebViewPoint.Builder()
+        .setX((long) webView.getScrollX())
+        .setY((long) webView.getScrollY())
+        .build();
   }
 
   @Override
@@ -514,12 +512,8 @@ public class WebViewHostApiImpl implements WebViewHostApi {
     webView.setBackgroundColor(color.intValue());
   }
 
-  @Nullable
-  private static String parseNullStringIdentifier(String value) {
-    if (value.equals(nullStringIdentifier)) {
-      return null;
-    }
-
-    return value;
+  /** Maintains instances used to communicate with the corresponding WebView Dart object. */
+  public InstanceManager getInstanceManager() {
+    return instanceManager;
   }
 }

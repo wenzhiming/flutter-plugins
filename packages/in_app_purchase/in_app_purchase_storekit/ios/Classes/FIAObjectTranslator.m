@@ -74,8 +74,12 @@
     @"subscriptionPeriod" :
             [FIAObjectTranslator getMapFromSKProductSubscriptionPeriod:discount.subscriptionPeriod]
         ?: [NSNull null],
-    @"paymentMode" : @(discount.paymentMode)
+    @"paymentMode" : @(discount.paymentMode),
   }];
+  if (@available(iOS 12.2, *)) {
+    [map setObject:discount.identifier ?: [NSNull null] forKey:@"identifier"];
+    [map setObject:@(discount.type) forKey:@"type"];
+  }
 
   // TODO(cyanglaz): NSLocale is a complex object, want to see the actual need of getting this
   // expanded to a map. Matching android to only get the currencySymbol for now.
@@ -167,18 +171,41 @@
   if (!error) {
     return nil;
   }
+
   NSMutableDictionary *userInfo = [NSMutableDictionary new];
   for (NSErrorUserInfoKey key in error.userInfo) {
     id value = error.userInfo[key];
-    if ([value isKindOfClass:[NSError class]]) {
-      userInfo[key] = [FIAObjectTranslator getMapFromNSError:value];
-    } else if ([value isKindOfClass:[NSURL class]]) {
-      userInfo[key] = [value absoluteString];
-    } else {
-      userInfo[key] = value;
-    }
+    userInfo[key] = [FIAObjectTranslator encodeNSErrorUserInfo:value];
   }
   return @{@"code" : @(error.code), @"domain" : error.domain ?: @"", @"userInfo" : userInfo};
+}
+
++ (id)encodeNSErrorUserInfo:(id)value {
+  if ([value isKindOfClass:[NSError class]]) {
+    return [FIAObjectTranslator getMapFromNSError:value];
+  } else if ([value isKindOfClass:[NSURL class]]) {
+    return [value absoluteString];
+  } else if ([value isKindOfClass:[NSNumber class]]) {
+    return value;
+  } else if ([value isKindOfClass:[NSString class]]) {
+    return value;
+  } else if ([value isKindOfClass:[NSArray class]]) {
+    NSMutableArray *errors = [[NSMutableArray alloc] init];
+    for (id error in value) {
+      [errors addObject:[FIAObjectTranslator encodeNSErrorUserInfo:error]];
+    }
+    return errors;
+  } else {
+    return [NSString
+        stringWithFormat:
+            @"Unable to encode native userInfo object of type %@ to map. Please submit an issue at "
+            @"https://github.com/flutter/flutter/issues/new with the title "
+            @"\"[in_app_purchase_storekit] "
+            @"Unable to encode userInfo of type %@\" and add reproduction steps and the error "
+            @"details in "
+            @"the description field.",
+            [value class], [value class]];
+  }
 }
 
 + (NSDictionary *)getMapFromSKStorefront:(SKStorefront *)storefront {
@@ -250,7 +277,7 @@
     return nil;
   }
 
-  if (!timestamp || ![timestamp isKindOfClass:NSNumber.class] || [timestamp intValue] <= 0) {
+  if (!timestamp || ![timestamp isKindOfClass:NSNumber.class] || [timestamp longLongValue] <= 0) {
     if (error) {
       *error = @"When specifying a payment discount the 'timestamp' field is mandatory.";
     }

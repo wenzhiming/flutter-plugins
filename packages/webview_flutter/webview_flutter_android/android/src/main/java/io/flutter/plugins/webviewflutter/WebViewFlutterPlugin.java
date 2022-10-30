@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import io.flutter.app.FlutterApplication;
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
@@ -24,6 +25,7 @@ import io.flutter.plugins.webviewflutter.GeneratedAndroidWebView.FlutterAssetMan
 import io.flutter.plugins.webviewflutter.GeneratedAndroidWebView.JavaScriptChannelHostApi;
 import io.flutter.plugins.webviewflutter.GeneratedAndroidWebView.WebChromeClientHostApi;
 import io.flutter.plugins.webviewflutter.GeneratedAndroidWebView.WebSettingsHostApi;
+import io.flutter.plugins.webviewflutter.GeneratedAndroidWebView.WebStorageHostApi;
 import io.flutter.plugins.webviewflutter.GeneratedAndroidWebView.WebViewClientHostApi;
 import io.flutter.plugins.webviewflutter.GeneratedAndroidWebView.WebViewHostApi;
 
@@ -43,6 +45,7 @@ import io.flutter.plugin.common.PluginRegistry.Registrar;
  * <p>Call {@link #registerWith} to use the stable {@code io.flutter.plugin.common} package instead.
  */
 public class WebViewFlutterPlugin implements FlutterPlugin, ActivityAware/*, PluginRegistry.ActivityResultListener,PluginRegistry.RequestPermissionsResultListener*/ {
+  private InstanceManager instanceManager;
   private FlutterPluginBinding pluginBinding;
   private WebViewHostApiImpl webViewHostApi;
   private JavaScriptChannelHostApiImpl javaScriptChannelHostApi;
@@ -91,7 +94,7 @@ public class WebViewFlutterPlugin implements FlutterPlugin, ActivityAware/*, Plu
       View containerView,
       FlutterAssetManager flutterAssetManager) {
 
-    InstanceManager instanceManager = new InstanceManager();
+    instanceManager = InstanceManager.open(identifier -> {});
     viewRegistry.registerViewFactory(
         "plugins.flutter.io/webview", new FlutterWebViewFactory(instanceManager));
 
@@ -133,6 +136,9 @@ public class WebViewFlutterPlugin implements FlutterPlugin, ActivityAware/*, Plu
     FlutterAssetManagerHostApi.setup(
         binaryMessenger, new FlutterAssetManagerHostApiImpl(flutterAssetManager));
     CookieManagerHostApi.setup(binaryMessenger, new CookieManagerHostApiImpl());
+    WebStorageHostApi.setup(
+        binaryMessenger,
+        new WebStorageHostApiImpl(instanceManager, new WebStorageHostApiImpl.WebStorageCreator()));
   }
 
   @Override
@@ -152,6 +158,7 @@ public class WebViewFlutterPlugin implements FlutterPlugin, ActivityAware/*, Plu
 
   @Override
   public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
+  instanceManager.close();
   }
 
   @Override
@@ -205,24 +212,9 @@ public class WebViewFlutterPlugin implements FlutterPlugin, ActivityAware/*, Plu
     javaScriptChannelHostApi.setPlatformThreadHandler(new Handler(context.getMainLooper()));
   }
 
-//  @Override
-//  public boolean onActivityResult(int requestCode, int resultCode, Intent data) {
-//    Log.v(TAG,"onActivityResult");
-//    if (webChromeClientHostApi != null){
-//      return webChromeClientHostApi.activityResult(requestCode, resultCode, data);
-//    }
-//
-//    return false;
-//  }
-//
-//  @Override
-//  public boolean onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-//    Log.v(TAG,"onRequestPermissionsResult");
-//    if (webChromeClientHostApi != null){
-//      return webChromeClientHostApi.requestPermissionsResult(requestCode, permissions, grantResults);
-//    }
-//
-//    return false;
-//  }
-
+  /** Maintains instances used to communicate with the corresponding objects in Dart. */
+  @Nullable
+  public InstanceManager getInstanceManager() {
+    return instanceManager;
+  }
 }

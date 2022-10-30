@@ -7,13 +7,14 @@ import 'dart:html' as html;
 import 'dart:math';
 
 import 'package:camera_platform_interface/camera_platform_interface.dart';
-import 'package:camera_web/src/camera.dart';
-import 'package:camera_web/src/camera_service.dart';
-import 'package:camera_web/src/types/types.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:stream_transform/stream_transform.dart';
+
+import 'camera.dart';
+import 'camera_service.dart';
+import 'types/types.dart';
 
 // The default error message, when the error is an empty string.
 // See: https://developer.mozilla.org/en-US/docs/Web/API/MediaError/message
@@ -290,7 +291,7 @@ class CameraPlugin extends CameraPlatform {
         cameraEventStreamController.add(
           CameraErrorEvent(
             cameraId,
-            'Error code: ${CameraErrorCode.abort}, error message: The video element\'s source has not fully loaded.',
+            "Error code: ${CameraErrorCode.abort}, error message: The video element's source has not fully loaded.",
           ),
         );
       });
@@ -400,7 +401,7 @@ class CameraPlugin extends CameraPlatform {
         // This wrapper allows use of both the old and new APIs.
         dynamic fullScreen() => documentElement.requestFullscreen();
         await fullScreen();
-        await screenOrientation.lock(orientationType.toString());
+        await screenOrientation.lock(orientationType);
       } else {
         throw PlatformException(
           code: CameraErrorCode.orientationNotSupported.toString(),
