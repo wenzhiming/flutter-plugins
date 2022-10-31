@@ -3,7 +3,6 @@
 // found in the LICENSE file.
 
 import 'dart:async';
-import 'dart:ui';
 
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -14,7 +13,7 @@ import 'messages.g.dart';
 /// An Android implementation of [VideoPlayerPlatform] that uses the
 /// Pigeon-generated [VideoPlayerApi].
 class AndroidVideoPlayer extends VideoPlayerPlatform {
-  final VideoPlayerApi _api = VideoPlayerApi();
+  final AndroidVideoPlayerApi _api = AndroidVideoPlayerApi();
 
   /// Registers this class as the default instance of [PathProviderPlatform].
   static void registerWith() {
@@ -131,6 +130,7 @@ class AndroidVideoPlayer extends VideoPlayerPlatform {
             duration: Duration(milliseconds: map['duration'] as int),
             size: Size((map['width'] as num?)?.toDouble() ?? 0.0,
                 (map['height'] as num?)?.toDouble() ?? 0.0),
+            rotationCorrection: map['rotationCorrection'] as int? ?? 0,
           );
         case 'completed':
           return VideoEvent(

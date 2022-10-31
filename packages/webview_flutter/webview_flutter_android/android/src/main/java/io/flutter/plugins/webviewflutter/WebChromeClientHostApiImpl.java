@@ -6,23 +6,6 @@ package io.flutter.plugins.webviewflutter;
 
 import static io.flutter.plugins.webviewflutter.WebViewFlutterPlugin.application;
 
-import android.app.Application;
-import android.os.Build;
-import android.os.Message;
-import android.webkit.GeolocationPermissions;
-import android.webkit.WebChromeClient;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.annotation.Size;
-import androidx.annotation.VisibleForTesting;
-import io.flutter.plugins.webviewflutter.GeneratedAndroidWebView.WebChromeClientHostApi;
-
-import android.net.Uri;
-import android.util.Log;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -31,21 +14,35 @@ import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.hardware.display.DisplayManager;
-import util.FileUtil;
-import android.widget.Toast;
-import android.content.ClipData;
-import android.webkit.ValueCallback;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Message;
 import android.provider.MediaStore;
-import java.io.File;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import android.util.Log;
+import android.webkit.GeolocationPermissions;
+import android.webkit.ValueCallback;
+import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.annotation.Size;
+import androidx.annotation.VisibleForTesting;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
-import androidx.core.app.ActivityCompat;
+
+import java.io.File;
+import java.util.Arrays;
+
+import io.flutter.plugins.webviewflutter.GeneratedAndroidWebView.WebChromeClientHostApi;
+import util.FileUtil;
 
 /**
  * Host api implementation for {@link WebChromeClient}.
@@ -227,7 +224,7 @@ public class WebChromeClientHostApiImpl implements WebChromeClientHostApi {
         (WebViewClient) instanceManager.getInstance(webViewClientInstanceId);
     final WebChromeClient webChromeClient =
         webChromeClientCreator.createWebChromeClient(flutterApi, webViewClient);
-    instanceManager.addInstance(webChromeClient, instanceId);
+    instanceManager.addDartCreatedInstance(webChromeClient, instanceId);
   }
 
   private static void openImageChooserActivity() {
@@ -250,6 +247,20 @@ public class WebChromeClientHostApiImpl implements WebChromeClientHostApi {
     if (WebViewFlutterPlugin.activity==null||!FileUtil.checkSDcard(WebViewFlutterPlugin.activity)) {
       return;
     }
+    String[] declaredPermissions = new String[0];
+    try {
+      PackageInfo info = WebViewFlutterPlugin.activity.getPackageManager().getPackageInfo(
+              WebViewFlutterPlugin.activity.getPackageName(),
+              PackageManager.GET_PERMISSIONS
+      );
+      declaredPermissions = info.requestedPermissions;
+    } catch (PackageManager.NameNotFoundException ignored) {
+    }
+    if (!Arrays.asList(declaredPermissions).contains(Manifest.permission.CAMERA)) {
+      openImageChooserActivity();
+      return;
+    }
+
     String[] selectPicTypeStr = {WebViewFlutterPlugin.activity.getString(R.string.take_photo),
             WebViewFlutterPlugin.activity.getString(R.string.photo_library)};
     new AlertDialog.Builder(WebViewFlutterPlugin.activity, AlertDialog.THEME_DEVICE_DEFAULT_DARK)

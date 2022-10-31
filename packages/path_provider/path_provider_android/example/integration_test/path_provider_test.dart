@@ -49,7 +49,7 @@ void main() {
     }
   });
 
-  final List<StorageDirectory?> _allDirs = <StorageDirectory?>[
+  final List<StorageDirectory?> allDirs = <StorageDirectory?>[
     null,
     StorageDirectory.music,
     StorageDirectory.podcasts,
@@ -60,13 +60,15 @@ void main() {
     StorageDirectory.movies,
   ];
 
-  for (final StorageDirectory? type in _allDirs) {
-    test('getExternalStorageDirectories (type: $type)', () async {
+  for (final StorageDirectory? type in allDirs) {
+    testWidgets('getExternalStorageDirectories (type: $type)',
+        (WidgetTester tester) async {
       final PathProviderPlatform provider = PathProviderPlatform.instance;
 
       final List<String>? directories =
           await provider.getExternalStoragePaths(type: type);
       expect(directories, isNotNull);
+      expect(directories, isNotEmpty);
       for (final String result in directories!) {
         _verifySampleFile(result, '$type');
       }

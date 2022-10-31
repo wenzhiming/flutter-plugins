@@ -1,3 +1,144 @@
+## 0.12.1
+
+* Modifies `publish_check_command.dart` to do a `dart pub get` in all examples
+  of the package being checked. Workaround for [dart-lang/pub#3618](https://github.com/dart-lang/pub/issues/3618).
+
+## 0.12.0
+
+* Changes the behavior of `--packages-for-branch` on main/master to run for
+  packages changed in the last commit, rather than running for all packages.
+  This allows CI to test the same filtered set of packages in post-submit as are
+  tested in presubmit.
+* Adds a `fix` command to run `dart fix --apply` in target packages.
+
+## 0.11.0
+
+* Renames `publish-plugin` to `publish`.
+* Renames arguments to `list`:
+    * `--package` now lists top-level packages (previously `--plugin`).
+    * `--package-or-subpackage` now lists top-level packages (previously
+      `--package`).
+
+## 0.10.0+1
+
+* Recognizes `run_test.sh` as a developer-only file in `version-check`.
+* Adds `readme-check` validation that the example/README.md for a federated
+  plugin's implementation packages has a warning about the intended use of the
+  example instead of the template boilerplate.
+
+## 0.10.0
+
+* Improves the logic in `version-check` to determine what changes don't require
+  version changes, as well as making any dev-only changes also not require
+  changelog changes since in practice we almost always override the check in
+  that case.
+* Removes special-case handling of Dependabot PRs, and the (fragile)
+  `--change-description-file` flag was only still used for that case, as
+  the improved diff analysis now handles that case more robustly.
+
+## 0.9.3
+
+* Raises minimum `compileSdkVersion` to 32 for the `all-plugins-app` command.
+
+## 0.9.2
+
+* Adds checking of `code-excerpt` configuration to `readme-check`, to validate
+  that if the excerpting tags are added to a README they are actually being
+  used.
+
+## 0.9.1
+
+* Adds a `--downgrade` flag to `analyze` for analyzing with the oldest possible
+  versions of packages.
+
+## 0.9.0
+
+* Replaces PR-description-based version/changelog/breaking change check
+  overrides in `version-check` with label-based overrides using a new
+  `pr-labels` flag, since we don't actually have reliable access to the
+  PR description in checks.
+
+## 0.8.10
+
+- Adds a new `remove-dev-dependencies` command to remove `dev_dependencies`
+  entries to make legacy version analysis possible in more cases.
+- Adds a `--lib-only` option to `analyze` to allow only analyzing the client
+  parts of a library for legacy verison compatibility.
+
+## 0.8.9
+
+- Includes `dev_dependencies` when overridding dependencies using
+  `make-deps-path-based`.
+- Bypasses version and CHANGELOG checks for Dependabot PRs for packages
+  that are known not to be client-affecting.
+
+## 0.8.8
+
+- Allows pre-release versions in `version-check`.
+
+## 0.8.7
+
+- Supports empty custom analysis allow list files.
+- `drive-examples` now validates files to ensure that they don't accidentally
+  use `test(...)`.
+- Adds a new `dependabot-check` command to ensure complete Dependabot coverage.
+- Adds `skip-if-not-supporting-dart-version` to allow for the same use cases
+  as `skip-if-not-supporting-flutter-version` but for packages without Flutter
+  constraints.
+
+## 0.8.6
+
+- Adds `update-release-info` to apply changelog and optional version changes
+  across multiple packages.
+- Fixes changelog validation when reverting to a `NEXT` state.
+- Fixes multiplication of `--force` flag when publishing multiple packages.
+- Adds minimum deployment target flags to `xcode-analyze` to allow
+  enforcing deprecation warning handling in advance of actually dropping
+  support for an OS version.
+- Checks for template boilerplate in `readme-check`.
+- `readme-check` now validates example READMEs when present.
+
+## 0.8.5
+
+- Updates `test` to inculde the Dart unit tests of examples, if any.
+- `drive-examples` now supports non-plugin packages.
+- Commands that iterate over examples now include non-Flutter example packages.
+
+## 0.8.4
+
+- `readme-check` now validates that there's a info tag on code blocks to
+  identify (and for supported languages, syntax highlight) the language.
+- `readme-check` now has a `--require-excerpts` flag to require that any Dart
+  code blocks be managed by `code_excerpter`.
+
+## 0.8.3
+
+- Adds a new `update-excerpts` command to maintain README files using the
+  `code-excerpter` package from flutter/site-shared.
+- `license-check` now ignores submodules.
+- Allows `make-deps-path-based` to skip packages it has alredy rewritten, so
+  that running multiple times won't fail after the first time.
+- Removes UWP support, since Flutter has dropped support for UWP.
+
+## 0.8.2+1
+
+- Adds a new `readme-check` command.
+- Updates `publish-plugin` command documentation.
+- Fixes `all-plugins-app` to preserve the original application's Dart SDK
+  version to avoid changing language feature opt-ins that the template may
+  rely on.
+- Fixes `custom-test` to run `pub get` before running Dart test scripts.
+
+## 0.8.2
+
+- Adds a new `custom-test` command.
+- Switches from deprecated `flutter packages` alias to `flutter pub`.
+
+## 0.8.1
+
+- Fixes an `analyze` regression in 0.8.0 with packages that have non-`example`
+  sub-packages.
+
 ## 0.8.0
 
 - Ensures that `firebase-test-lab` runs include an `integration_test` runner.
@@ -19,6 +160,9 @@
   `flutter` behavior.
 - Validates `default_package` entries in plugins.
 - Removes `allow-warnings` from the `podspecs` command.
+- Adds `skip-if-not-supporting-flutter-version` to allow running tests using a
+  version of Flutter that not all packages support. (E.g., to allow for running
+  some tests against old versions of Flutter to help avoid accidental breakage.)
 
 ## 0.7.3
 
