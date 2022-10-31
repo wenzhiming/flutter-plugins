@@ -3,17 +3,16 @@
 // found in the LICENSE file.
 
 import 'package:file/file.dart';
-import 'package:flutter_plugin_tools/src/common/plugin_utils.dart';
 import 'package:git/git.dart';
 import 'package:path/path.dart' as p;
 import 'package:platform/platform.dart';
 import 'package:pub_semver/pub_semver.dart';
-import 'package:pubspec_parse/pubspec_parse.dart';
 
 import 'common/core.dart';
 import 'common/file_utils.dart';
 import 'common/git_version_finder.dart';
 import 'common/package_looping_command.dart';
+import 'common/plugin_utils.dart';
 import 'common/process_runner.dart';
 import 'common/repository_package.dart';
 

@@ -16,7 +16,7 @@ import 'package:mockito/mockito.dart';
 import 'package:pub_semver/pub_semver.dart';
 import 'package:test/test.dart';
 
-import 'common/plugin_command_test.mocks.dart';
+import 'common/package_command_test.mocks.dart';
 import 'mocks.dart';
 import 'util.dart';
 
@@ -44,7 +44,7 @@ class MockProcessResult extends Mock implements io.ProcessResult {}
 
 void main() {
   const String indentation = '  ';
-  group('$VersionCheckCommand', () {
+  group('VersionCheckCommand', () {
     late FileSystem fileSystem;
     late MockPlatform mockPlatform;
     late Directory packagesDir;
@@ -298,72 +298,26 @@ void main() {
           ]));
     });
 
-    test('allows breaking changes to platform interfaces with explanation',
+    test('allows breaking changes to platform interfaces with override label',
         () async {
       createFakePlugin('plugin_platform_interface', packagesDir,
           version: '2.0.0');
       processRunner.mockProcessesForExecutable['git-show'] = <io.Process>[
         MockProcess(stdout: 'version: 1.0.0'),
       ];
-      final File changeDescriptionFile =
-          fileSystem.file('change_description.txt');
-      changeDescriptionFile.writeAsStringSync('''
-Some general PR description
 
-## Breaking change justification
-
-This is necessary because of X, Y, and Z
-
-## Another section''');
       final List<String> output = await runCapturingPrint(runner, <String>[
         'version-check',
         '--base-sha=main',
-        '--change-description-file=${changeDescriptionFile.path}'
+        '--pr-labels=some label,override: allow breaking change,another-label'
       ]);
 
       expect(
         output,
         containsAllInOrder(<Matcher>[
           contains('Allowing breaking change to plugin_platform_interface '
-              'due to "## Breaking change justification" in the change '
-              'description.'),
+              'due to the "override: allow breaking change" label.'),
           contains('Ran for 1 package(s) (1 with warnings)'),
-        ]),
-      );
-      expect(
-          processRunner.recordedCalls,
-          containsAllInOrder(const <ProcessCall>[
-            ProcessCall(
-                'git-show',
-                <String>[
-                  'main:packages/plugin_platform_interface/pubspec.yaml'
-                ],
-                null)
-          ]));
-    });
-
-    test('throws if a nonexistent change description file is specified',
-        () async {
-      createFakePlugin('plugin_platform_interface', packagesDir,
-          version: '2.0.0');
-      processRunner.mockProcessesForExecutable['git-show'] = <io.Process>[
-        MockProcess(stdout: 'version: 1.0.0'),
-      ];
-
-      Error? commandError;
-      final List<String> output = await runCapturingPrint(runner, <String>[
-        'version-check',
-        '--base-sha=main',
-        '--change-description-file=a_missing_file.txt'
-      ], errorHandler: (Error e) {
-        commandError = e;
-      });
-
-      expect(commandError, isA<ToolExit>());
-      expect(
-        output,
-        containsAllInOrder(<Matcher>[
-          contains('No such file: a_missing_file.txt'),
         ]),
       );
       expect(
@@ -414,14 +368,14 @@ This is necessary because of X, Y, and Z
     test('Allow empty lines in front of the first version in CHANGELOG',
         () async {
       const String version = '1.0.1';
-      final Directory pluginDirectory =
+      final RepositoryPackage plugin =
           createFakePlugin('plugin', packagesDir, version: version);
       const String changelog = '''
 
 ## $version
 * Some changes.
 ''';
-      createFakeCHANGELOG(pluginDirectory, changelog);
+      plugin.changelogFile.writeAsStringSync(changelog);
       final List<String> output = await runCapturingPrint(
           runner, <String>['version-check', '--base-sha=main']);
       expect(
@@ -433,13 +387,13 @@ This is necessary because of X, Y, and Z
     });
 
     test('Throws if versions in changelog and pubspec do not match', () async {
-      final Directory pluginDirectory =
+      final RepositoryPackage plugin =
           createFakePlugin('plugin', packagesDir, version: '1.0.1');
       const String changelog = '''
 ## 1.0.2
 * Some changes.
 ''';
-      createFakeCHANGELOG(pluginDirectory, changelog);
+      plugin.changelogFile.writeAsStringSync(changelog);
       Error? commandError;
       final List<String> output = await runCapturingPrint(
           runner, <String>['version-check', '--base-sha=main', '--against-pub'],
@@ -458,14 +412,14 @@ This is necessary because of X, Y, and Z
 
     test('Success if CHANGELOG and pubspec versions match', () async {
       const String version = '1.0.1';
-      final Directory pluginDirectory =
+      final RepositoryPackage plugin =
           createFakePlugin('plugin', packagesDir, version: version);
 
       const String changelog = '''
 ## $version
 * Some changes.
 ''';
-      createFakeCHANGELOG(pluginDirectory, changelog);
+      plugin.changelogFile.writeAsStringSync(changelog);
       final List<String> output = await runCapturingPrint(
           runner, <String>['version-check', '--base-sha=main']);
       expect(
@@ -479,7 +433,7 @@ This is necessary because of X, Y, and Z
     test(
         'Fail if pubspec version only matches an older version listed in CHANGELOG',
         () async {
-      final Directory pluginDirectory =
+      final RepositoryPackage plugin =
           createFakePlugin('plugin', packagesDir, version: '1.0.0');
 
       const String changelog = '''
@@ -488,7 +442,7 @@ This is necessary because of X, Y, and Z
 ## 1.0.0
 * Some other changes.
 ''';
-      createFakeCHANGELOG(pluginDirectory, changelog);
+      plugin.changelogFile.writeAsStringSync(changelog);
       bool hasError = false;
       final List<String> output = await runCapturingPrint(
           runner, <String>['version-check', '--base-sha=main', '--against-pub'],
@@ -509,7 +463,7 @@ This is necessary because of X, Y, and Z
     test('Allow NEXT as a placeholder for gathering CHANGELOG entries',
         () async {
       const String version = '1.0.0';
-      final Directory pluginDirectory =
+      final RepositoryPackage plugin =
           createFakePlugin('plugin', packagesDir, version: version);
 
       const String changelog = '''
@@ -518,7 +472,7 @@ This is necessary because of X, Y, and Z
 ## $version
 * Some other changes.
 ''';
-      createFakeCHANGELOG(pluginDirectory, changelog);
+      plugin.changelogFile.writeAsStringSync(changelog);
       processRunner.mockProcessesForExecutable['git-show'] = <io.Process>[
         MockProcess(stdout: 'version: 1.0.0'),
       ];
@@ -536,7 +490,7 @@ This is necessary because of X, Y, and Z
 
     test('Fail if NEXT appears after a version', () async {
       const String version = '1.0.1';
-      final Directory pluginDirectory =
+      final RepositoryPackage plugin =
           createFakePlugin('plugin', packagesDir, version: version);
 
       const String changelog = '''
@@ -547,7 +501,7 @@ This is necessary because of X, Y, and Z
 ## 1.0.0
 * Some other changes.
 ''';
-      createFakeCHANGELOG(pluginDirectory, changelog);
+      plugin.changelogFile.writeAsStringSync(changelog);
       bool hasError = false;
       final List<String> output = await runCapturingPrint(
           runner, <String>['version-check', '--base-sha=main', '--against-pub'],
@@ -561,7 +515,7 @@ This is necessary because of X, Y, and Z
         output,
         containsAllInOrder(<Matcher>[
           contains('When bumping the version for release, the NEXT section '
-              'should be incorporated into the new version\'s release notes.')
+              "should be incorporated into the new version's release notes.")
         ]),
       );
     });
@@ -569,7 +523,7 @@ This is necessary because of X, Y, and Z
     test('Fail if NEXT is left in the CHANGELOG when adding a version bump',
         () async {
       const String version = '1.0.1';
-      final Directory pluginDirectory =
+      final RepositoryPackage plugin =
           createFakePlugin('plugin', packagesDir, version: version);
 
       const String changelog = '''
@@ -580,7 +534,7 @@ This is necessary because of X, Y, and Z
 ## 1.0.0
 * Some other changes.
 ''';
-      createFakeCHANGELOG(pluginDirectory, changelog);
+      plugin.changelogFile.writeAsStringSync(changelog);
 
       bool hasError = false;
       final List<String> output = await runCapturingPrint(
@@ -595,15 +549,15 @@ This is necessary because of X, Y, and Z
         output,
         containsAllInOrder(<Matcher>[
           contains('When bumping the version for release, the NEXT section '
-              'should be incorporated into the new version\'s release notes.'),
+              "should be incorporated into the new version's release notes."),
           contains('plugin:\n'
               '    CHANGELOG.md failed validation.'),
         ]),
       );
     });
 
-    test('Fail if the version changes without replacing NEXT', () async {
-      final Directory pluginDirectory =
+    test('fails if the version increases without replacing NEXT', () async {
+      final RepositoryPackage plugin =
           createFakePlugin('plugin', packagesDir, version: '1.0.1');
 
       const String changelog = '''
@@ -612,7 +566,7 @@ This is necessary because of X, Y, and Z
 ## 1.0.0
 * Some other changes.
 ''';
-      createFakeCHANGELOG(pluginDirectory, changelog);
+      plugin.changelogFile.writeAsStringSync(changelog);
 
       bool hasError = false;
       final List<String> output = await runCapturingPrint(
@@ -627,7 +581,34 @@ This is necessary because of X, Y, and Z
         output,
         containsAllInOrder(<Matcher>[
           contains('When bumping the version for release, the NEXT section '
-              'should be incorporated into the new version\'s release notes.')
+              "should be incorporated into the new version's release notes.")
+        ]),
+      );
+    });
+
+    test('allows NEXT for a revert', () async {
+      final RepositoryPackage plugin =
+          createFakePlugin('plugin', packagesDir, version: '1.0.0');
+
+      const String changelog = '''
+## NEXT
+* Some changes that should be listed as part of 1.0.1.
+## 1.0.0
+* Some other changes.
+''';
+      plugin.changelogFile.writeAsStringSync(changelog);
+      plugin.changelogFile.writeAsStringSync(changelog);
+      processRunner.mockProcessesForExecutable['git-show'] = <io.Process>[
+        MockProcess(stdout: 'version: 1.0.1'),
+      ];
+
+      final List<String> output = await runCapturingPrint(
+          runner, <String>['version-check', '--base-sha=main']);
+      expect(
+        output,
+        containsAllInOrder(<Matcher>[
+          contains('New version is lower than previous version. '
+              'This is assumed to be a revert.'),
         ]),
       );
     });
@@ -635,7 +616,7 @@ This is necessary because of X, Y, and Z
     test(
         'fails gracefully if the version headers are not found due to using the wrong style',
         () async {
-      final Directory pluginDirectory =
+      final RepositoryPackage plugin =
           createFakePlugin('plugin', packagesDir, version: '1.0.0');
 
       const String changelog = '''
@@ -644,7 +625,7 @@ This is necessary because of X, Y, and Z
 # 1.0.0
 * Some other changes.
 ''';
-      createFakeCHANGELOG(pluginDirectory, changelog);
+      plugin.changelogFile.writeAsStringSync(changelog);
       processRunner.mockProcessesForExecutable['git-show'] = <io.Process>[
         MockProcess(stdout: 'version: 1.0.0'),
       ];
@@ -670,14 +651,14 @@ This is necessary because of X, Y, and Z
     });
 
     test('fails gracefully if the version is unparseable', () async {
-      final Directory pluginDirectory =
+      final RepositoryPackage plugin =
           createFakePlugin('plugin', packagesDir, version: '1.0.0');
 
       const String changelog = '''
 ## Alpha
 * Some changes.
 ''';
-      createFakeCHANGELOG(pluginDirectory, changelog);
+      plugin.changelogFile.writeAsStringSync(changelog);
       processRunner.mockProcessesForExecutable['git-show'] = <io.Process>[
         MockProcess(stdout: 'version: 1.0.0'),
       ];
@@ -700,8 +681,7 @@ This is necessary because of X, Y, and Z
     });
 
     group('missing change detection', () {
-      Future<List<String>> _runWithMissingChangeDetection(
-          List<String> extraArgs,
+      Future<List<String>> runWithMissingChangeDetection(List<String> extraArgs,
           {void Function(Error error)? errorHandler}) async {
         return runCapturingPrint(
             runner,
@@ -715,14 +695,14 @@ This is necessary because of X, Y, and Z
       }
 
       test('passes for unchanged packages', () async {
-        final Directory pluginDirectory =
+        final RepositoryPackage plugin =
             createFakePlugin('plugin', packagesDir, version: '1.0.0');
 
         const String changelog = '''
 ## 1.0.0
 * Some changes.
 ''';
-        createFakeCHANGELOG(pluginDirectory, changelog);
+        plugin.changelogFile.writeAsStringSync(changelog);
         processRunner.mockProcessesForExecutable['git-show'] = <io.Process>[
           MockProcess(stdout: 'version: 1.0.0'),
         ];
@@ -731,7 +711,7 @@ This is necessary because of X, Y, and Z
         ];
 
         final List<String> output =
-            await _runWithMissingChangeDetection(<String>[]);
+            await runWithMissingChangeDetection(<String>[]);
 
         expect(
           output,
@@ -744,14 +724,14 @@ This is necessary because of X, Y, and Z
       test(
           'fails if a version change is missing from a change that does not '
           'pass the exemption check', () async {
-        final Directory pluginDirectory =
+        final RepositoryPackage plugin =
             createFakePlugin('plugin', packagesDir, version: '1.0.0');
 
         const String changelog = '''
 ## 1.0.0
 * Some changes.
 ''';
-        createFakeCHANGELOG(pluginDirectory, changelog);
+        plugin.changelogFile.writeAsStringSync(changelog);
         processRunner.mockProcessesForExecutable['git-show'] = <io.Process>[
           MockProcess(stdout: 'version: 1.0.0'),
         ];
@@ -762,7 +742,7 @@ packages/plugin/lib/plugin.dart
         ];
 
         Error? commandError;
-        final List<String> output = await _runWithMissingChangeDetection(
+        final List<String> output = await runWithMissingChangeDetection(
             <String>[], errorHandler: (Error e) {
           commandError = e;
         });
@@ -779,14 +759,14 @@ packages/plugin/lib/plugin.dart
       });
 
       test('passes version change requirement when version changes', () async {
-        final Directory pluginDirectory =
+        final RepositoryPackage plugin =
             createFakePlugin('plugin', packagesDir, version: '1.0.1');
 
         const String changelog = '''
 ## 1.0.1
 * Some changes.
 ''';
-        createFakeCHANGELOG(pluginDirectory, changelog);
+        plugin.changelogFile.writeAsStringSync(changelog);
         processRunner.mockProcessesForExecutable['git-show'] = <io.Process>[
           MockProcess(stdout: 'version: 1.0.0'),
         ];
@@ -799,7 +779,7 @@ packages/plugin/pubspec.yaml
         ];
 
         final List<String> output =
-            await _runWithMissingChangeDetection(<String>[]);
+            await runWithMissingChangeDetection(<String>[]);
 
         expect(
           output,
@@ -810,14 +790,14 @@ packages/plugin/pubspec.yaml
       });
 
       test('version change check ignores files outside the package', () async {
-        final Directory pluginDirectory =
+        final RepositoryPackage plugin =
             createFakePlugin('plugin', packagesDir, version: '1.0.0');
 
         const String changelog = '''
 ## 1.0.0
 * Some changes.
 ''';
-        createFakeCHANGELOG(pluginDirectory, changelog);
+        plugin.changelogFile.writeAsStringSync(changelog);
         processRunner.mockProcessesForExecutable['git-show'] = <io.Process>[
           MockProcess(stdout: 'version: 1.0.0'),
         ];
@@ -829,7 +809,7 @@ tool/plugin/lib/plugin.dart
         ];
 
         final List<String> output =
-            await _runWithMissingChangeDetection(<String>[]);
+            await runWithMissingChangeDetection(<String>[]);
 
         expect(
           output,
@@ -840,14 +820,14 @@ tool/plugin/lib/plugin.dart
       });
 
       test('allows missing version change for exempt changes', () async {
-        final Directory pluginDirectory =
+        final RepositoryPackage plugin =
             createFakePlugin('plugin', packagesDir, version: '1.0.0');
 
         const String changelog = '''
 ## 1.0.0
 * Some changes.
 ''';
-        createFakeCHANGELOG(pluginDirectory, changelog);
+        plugin.changelogFile.writeAsStringSync(changelog);
         processRunner.mockProcessesForExecutable['git-show'] = <io.Process>[
           MockProcess(stdout: 'version: 1.0.0'),
         ];
@@ -862,7 +842,7 @@ packages/plugin/CHANGELOG.md
         ];
 
         final List<String> output =
-            await _runWithMissingChangeDetection(<String>[]);
+            await runWithMissingChangeDetection(<String>[]);
 
         expect(
           output,
@@ -872,15 +852,15 @@ packages/plugin/CHANGELOG.md
         );
       });
 
-      test('allows missing version change with justification', () async {
-        final Directory pluginDirectory =
+      test('allows missing version change with override label', () async {
+        final RepositoryPackage plugin =
             createFakePlugin('plugin', packagesDir, version: '1.0.0');
 
         const String changelog = '''
 ## 1.0.0
 * Some changes.
 ''';
-        createFakeCHANGELOG(pluginDirectory, changelog);
+        plugin.changelogFile.writeAsStringSync(changelog);
         processRunner.mockProcessesForExecutable['git-show'] = <io.Process>[
           MockProcess(stdout: 'version: 1.0.0'),
         ];
@@ -892,36 +872,29 @@ packages/plugin/pubspec.yaml
 '''),
         ];
 
-        final File changeDescriptionFile =
-            fileSystem.file('change_description.txt');
-        changeDescriptionFile.writeAsStringSync('''
-Some general PR description
-
-No version change: Code change is only to implementation comments.
-''');
         final List<String> output =
-            await _runWithMissingChangeDetection(<String>[
-          '--change-description-file=${changeDescriptionFile.path}'
+            await runWithMissingChangeDetection(<String>[
+          '--pr-labels=some label,override: no versioning needed,another-label'
         ]);
 
         expect(
           output,
           containsAllInOrder(<Matcher>[
-            contains('Ignoring lack of version change due to '
-                '"No version change:" in the change description.'),
+            contains('Ignoring lack of version change due to the '
+                '"override: no versioning needed" label.'),
           ]),
         );
       });
 
       test('fails if a CHANGELOG change is missing', () async {
-        final Directory pluginDirectory =
+        final RepositoryPackage plugin =
             createFakePlugin('plugin', packagesDir, version: '1.0.0');
 
         const String changelog = '''
 ## 1.0.0
 * Some changes.
 ''';
-        createFakeCHANGELOG(pluginDirectory, changelog);
+        plugin.changelogFile.writeAsStringSync(changelog);
         processRunner.mockProcessesForExecutable['git-show'] = <io.Process>[
           MockProcess(stdout: 'version: 1.0.0'),
         ];
@@ -932,7 +905,7 @@ packages/plugin/example/lib/foo.dart
         ];
 
         Error? commandError;
-        final List<String> output = await _runWithMissingChangeDetection(
+        final List<String> output = await runWithMissingChangeDetection(
             <String>[], errorHandler: (Error e) {
           commandError = e;
         });
@@ -949,14 +922,14 @@ packages/plugin/example/lib/foo.dart
       });
 
       test('passes CHANGELOG check when the CHANGELOG is changed', () async {
-        final Directory pluginDirectory =
+        final RepositoryPackage plugin =
             createFakePlugin('plugin', packagesDir, version: '1.0.0');
 
         const String changelog = '''
 ## 1.0.0
 * Some changes.
 ''';
-        createFakeCHANGELOG(pluginDirectory, changelog);
+        plugin.changelogFile.writeAsStringSync(changelog);
         processRunner.mockProcessesForExecutable['git-show'] = <io.Process>[
           MockProcess(stdout: 'version: 1.0.0'),
         ];
@@ -968,7 +941,7 @@ packages/plugin/CHANGELOG.md
         ];
 
         final List<String> output =
-            await _runWithMissingChangeDetection(<String>[]);
+            await runWithMissingChangeDetection(<String>[]);
 
         expect(
           output,
@@ -980,14 +953,14 @@ packages/plugin/CHANGELOG.md
 
       test('fails CHANGELOG check if only another package CHANGELOG chages',
           () async {
-        final Directory pluginDirectory =
+        final RepositoryPackage plugin =
             createFakePlugin('plugin', packagesDir, version: '1.0.0');
 
         const String changelog = '''
 ## 1.0.0
 * Some changes.
 ''';
-        createFakeCHANGELOG(pluginDirectory, changelog);
+        plugin.changelogFile.writeAsStringSync(changelog);
         processRunner.mockProcessesForExecutable['git-show'] = <io.Process>[
           MockProcess(stdout: 'version: 1.0.0'),
         ];
@@ -999,7 +972,7 @@ packages/another_plugin/CHANGELOG.md
         ];
 
         Error? commandError;
-        final List<String> output = await _runWithMissingChangeDetection(
+        final List<String> output = await runWithMissingChangeDetection(
             <String>[], errorHandler: (Error e) {
           commandError = e;
         });
@@ -1014,14 +987,14 @@ packages/another_plugin/CHANGELOG.md
       });
 
       test('allows missing CHANGELOG change with justification', () async {
-        final Directory pluginDirectory =
+        final RepositoryPackage plugin =
             createFakePlugin('plugin', packagesDir, version: '1.0.0');
 
         const String changelog = '''
 ## 1.0.0
 * Some changes.
 ''';
-        createFakeCHANGELOG(pluginDirectory, changelog);
+        plugin.changelogFile.writeAsStringSync(changelog);
         processRunner.mockProcessesForExecutable['git-show'] = <io.Process>[
           MockProcess(stdout: 'version: 1.0.0'),
         ];
@@ -1031,23 +1004,89 @@ packages/plugin/example/lib/foo.dart
 '''),
         ];
 
-        final File changeDescriptionFile =
-            fileSystem.file('change_description.txt');
-        changeDescriptionFile.writeAsStringSync('''
-Some general PR description
-
-No CHANGELOG change: Code change is only to implementation comments.
-''');
         final List<String> output =
-            await _runWithMissingChangeDetection(<String>[
-          '--change-description-file=${changeDescriptionFile.path}'
+            await runWithMissingChangeDetection(<String>[
+          '--pr-labels=some label,override: no changelog needed,another-label'
         ]);
 
         expect(
           output,
           containsAllInOrder(<Matcher>[
-            contains('Ignoring lack of CHANGELOG update due to '
-                '"No CHANGELOG change:" in the change description.'),
+            contains('Ignoring lack of CHANGELOG update due to the '
+                '"override: no changelog needed" label.'),
+          ]),
+        );
+      });
+
+      // This test ensures that Dependabot Gradle changes to test-only files
+      // aren't flagged by the version check.
+      test(
+          'allows missing CHANGELOG and version change for test-only Gradle changes',
+          () async {
+        final RepositoryPackage plugin =
+            createFakePlugin('plugin', packagesDir, version: '1.0.0');
+
+        const String changelog = '''
+## 1.0.0
+* Some changes.
+''';
+        plugin.changelogFile.writeAsStringSync(changelog);
+        processRunner.mockProcessesForExecutable['git-show'] = <io.Process>[
+          MockProcess(stdout: 'version: 1.0.0'),
+        ];
+        processRunner.mockProcessesForExecutable['git-diff'] = <io.Process>[
+          // File list.
+          MockProcess(stdout: '''
+packages/plugin/android/build.gradle
+'''),
+          // build.gradle diff
+          MockProcess(stdout: '''
+-  androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+-  testImplementation 'junit:junit:4.10.0'
++  androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
++  testImplementation 'junit:junit:4.13.2'
+'''),
+        ];
+
+        final List<String> output =
+            await runWithMissingChangeDetection(<String>[]);
+
+        expect(
+          output,
+          containsAllInOrder(<Matcher>[
+            contains('Running for plugin'),
+          ]),
+        );
+      });
+
+      test('allows missing CHANGELOG and version change for dev-only changes',
+          () async {
+        final RepositoryPackage plugin =
+            createFakePlugin('plugin', packagesDir, version: '1.0.0');
+
+        const String changelog = '''
+## 1.0.0
+* Some changes.
+''';
+        plugin.changelogFile.writeAsStringSync(changelog);
+        processRunner.mockProcessesForExecutable['git-show'] = <io.Process>[
+          MockProcess(stdout: 'version: 1.0.0'),
+        ];
+        processRunner.mockProcessesForExecutable['git-diff'] = <io.Process>[
+          // File list.
+          MockProcess(stdout: '''
+packages/plugin/tool/run_tests.dart
+packages/plugin/run_tests.sh
+'''),
+        ];
+
+        final List<String> output =
+            await runWithMissingChangeDetection(<String>[]);
+
+        expect(
+          output,
+          containsAllInOrder(<Matcher>[
+            contains('Running for plugin'),
           ]),
         );
       });
@@ -1150,6 +1189,186 @@ ${indentation}HTTP response: null
           contains('Unable to find previous version on pub server.'),
         ]),
       );
+    });
+
+    group('prelease versions', () {
+      test(
+          'allow an otherwise-valid transition that also adds a pre-release component',
+          () async {
+        createFakePlugin('plugin', packagesDir, version: '2.0.0-dev');
+        processRunner.mockProcessesForExecutable['git-show'] = <io.Process>[
+          MockProcess(stdout: 'version: 1.0.0'),
+        ];
+        final List<String> output = await runCapturingPrint(
+            runner, <String>['version-check', '--base-sha=main']);
+
+        expect(
+          output,
+          containsAllInOrder(<Matcher>[
+            contains('Running for plugin'),
+            contains('1.0.0 -> 2.0.0-dev'),
+          ]),
+        );
+        expect(
+            processRunner.recordedCalls,
+            containsAllInOrder(const <ProcessCall>[
+              ProcessCall('git-show',
+                  <String>['main:packages/plugin/pubspec.yaml'], null)
+            ]));
+      });
+
+      test('allow releasing a pre-release', () async {
+        createFakePlugin('plugin', packagesDir, version: '1.2.0');
+        processRunner.mockProcessesForExecutable['git-show'] = <io.Process>[
+          MockProcess(stdout: 'version: 1.2.0-dev'),
+        ];
+        final List<String> output = await runCapturingPrint(
+            runner, <String>['version-check', '--base-sha=main']);
+
+        expect(
+          output,
+          containsAllInOrder(<Matcher>[
+            contains('Running for plugin'),
+            contains('1.2.0-dev -> 1.2.0'),
+          ]),
+        );
+        expect(
+            processRunner.recordedCalls,
+            containsAllInOrder(const <ProcessCall>[
+              ProcessCall('git-show',
+                  <String>['main:packages/plugin/pubspec.yaml'], null)
+            ]));
+      });
+
+      // Allow abandoning a pre-release version in favor of a different version
+      // change type.
+      test(
+          'allow an otherwise-valid transition that also removes a pre-release component',
+          () async {
+        createFakePlugin('plugin', packagesDir, version: '2.0.0');
+        processRunner.mockProcessesForExecutable['git-show'] = <io.Process>[
+          MockProcess(stdout: 'version: 1.2.0-dev'),
+        ];
+        final List<String> output = await runCapturingPrint(
+            runner, <String>['version-check', '--base-sha=main']);
+
+        expect(
+          output,
+          containsAllInOrder(<Matcher>[
+            contains('Running for plugin'),
+            contains('1.2.0-dev -> 2.0.0'),
+          ]),
+        );
+        expect(
+            processRunner.recordedCalls,
+            containsAllInOrder(const <ProcessCall>[
+              ProcessCall('git-show',
+                  <String>['main:packages/plugin/pubspec.yaml'], null)
+            ]));
+      });
+
+      test('allow changing only the pre-release version', () async {
+        createFakePlugin('plugin', packagesDir, version: '1.2.0-dev.2');
+        processRunner.mockProcessesForExecutable['git-show'] = <io.Process>[
+          MockProcess(stdout: 'version: 1.2.0-dev.1'),
+        ];
+        final List<String> output = await runCapturingPrint(
+            runner, <String>['version-check', '--base-sha=main']);
+
+        expect(
+          output,
+          containsAllInOrder(<Matcher>[
+            contains('Running for plugin'),
+            contains('1.2.0-dev.1 -> 1.2.0-dev.2'),
+          ]),
+        );
+        expect(
+            processRunner.recordedCalls,
+            containsAllInOrder(const <ProcessCall>[
+              ProcessCall('git-show',
+                  <String>['main:packages/plugin/pubspec.yaml'], null)
+            ]));
+      });
+
+      test('denies invalid version change that also adds a pre-release',
+          () async {
+        createFakePlugin('plugin', packagesDir, version: '0.2.0-dev');
+        processRunner.mockProcessesForExecutable['git-show'] = <io.Process>[
+          MockProcess(stdout: 'version: 0.0.1'),
+        ];
+        Error? commandError;
+        final List<String> output = await runCapturingPrint(
+            runner, <String>['version-check', '--base-sha=main'],
+            errorHandler: (Error e) {
+          commandError = e;
+        });
+
+        expect(commandError, isA<ToolExit>());
+        expect(
+            output,
+            containsAllInOrder(<Matcher>[
+              contains('Incorrectly updated version.'),
+            ]));
+        expect(
+            processRunner.recordedCalls,
+            containsAllInOrder(const <ProcessCall>[
+              ProcessCall('git-show',
+                  <String>['main:packages/plugin/pubspec.yaml'], null)
+            ]));
+      });
+
+      test('denies invalid version change that also removes a pre-release',
+          () async {
+        createFakePlugin('plugin', packagesDir, version: '0.2.0');
+        processRunner.mockProcessesForExecutable['git-show'] = <io.Process>[
+          MockProcess(stdout: 'version: 0.0.1-dev'),
+        ];
+        Error? commandError;
+        final List<String> output = await runCapturingPrint(
+            runner, <String>['version-check', '--base-sha=main'],
+            errorHandler: (Error e) {
+          commandError = e;
+        });
+
+        expect(commandError, isA<ToolExit>());
+        expect(
+            output,
+            containsAllInOrder(<Matcher>[
+              contains('Incorrectly updated version.'),
+            ]));
+        expect(
+            processRunner.recordedCalls,
+            containsAllInOrder(const <ProcessCall>[
+              ProcessCall('git-show',
+                  <String>['main:packages/plugin/pubspec.yaml'], null)
+            ]));
+      });
+
+      test('denies invalid version change between pre-releases', () async {
+        createFakePlugin('plugin', packagesDir, version: '0.2.0-dev');
+        processRunner.mockProcessesForExecutable['git-show'] = <io.Process>[
+          MockProcess(stdout: 'version: 0.0.1-dev'),
+        ];
+        Error? commandError;
+        final List<String> output = await runCapturingPrint(
+            runner, <String>['version-check', '--base-sha=main'],
+            errorHandler: (Error e) {
+          commandError = e;
+        });
+
+        expect(commandError, isA<ToolExit>());
+        expect(
+            output,
+            containsAllInOrder(<Matcher>[
+              contains('Incorrectly updated version.'),
+            ]));
+        expect(
+            processRunner.recordedCalls,
+            containsAllInOrder(const <ProcessCall>[
+              ProcessCall('git-show',
+                  <String>['main:packages/plugin/pubspec.yaml'], null)
+            ]));
+      });
     });
   });
 

@@ -11,7 +11,7 @@ import 'package:meta/meta.dart';
 import 'package:platform/platform.dart';
 
 import 'common/core.dart';
-import 'common/plugin_command.dart';
+import 'common/package_command.dart';
 import 'common/process_runner.dart';
 
 /// In theory this should be 8191, but in practice that was still resulting in
@@ -37,7 +37,7 @@ final Uri _googleFormatterUrl = Uri.https('github.com',
     '/google/google-java-format/releases/download/google-java-format-1.3/google-java-format-1.3-all-deps.jar');
 
 /// A command to format all package code.
-class FormatCommand extends PluginCommand {
+class FormatCommand extends PackageCommand {
   /// Creates an instance of the format command.
   FormatCommand(
     Directory packagesDir, {
@@ -130,8 +130,7 @@ class FormatCommand extends PluginCommand {
     if (clangFiles.isNotEmpty) {
       final String clangFormat = getStringArg('clang-format');
       if (!await _hasDependency(clangFormat)) {
-        printError(
-            'Unable to run \'clang-format\'. Make sure that it is in your '
+        printError('Unable to run "clang-format". Make sure that it is in your '
             'path, or provide a full path with --clang-format.');
         throw ToolExit(_exitDependencyMissing);
       }
@@ -156,7 +155,7 @@ class FormatCommand extends PluginCommand {
       final String java = getStringArg('java');
       if (!await _hasDependency(java)) {
         printError(
-            'Unable to run \'java\'. Make sure that it is in your path, or '
+            'Unable to run "java". Make sure that it is in your path, or '
             'provide a full path with --java.');
         throw ToolExit(_exitDependencyMissing);
       }

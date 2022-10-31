@@ -1,3 +1,40 @@
+## 1.9.5+1
+
+* Merge changes from upstream
+
+## 1.9.5
+
+* Updates code for `no_leading_underscores_for_local_identifiers` lint.
+
+## 1.9.4
+
+* Updates imports for `prefer_relative_imports`.
+
+## 1.9.3
+
+* Updates minimum Flutter version to 2.10.
+* Removes `BuildParams` from v4 interface and adds `layoutDirection` to the creation params.
+
+## 1.9.2
+
+* Fixes avoid_redundant_argument_values lint warnings and minor typos.
+* Ignores unnecessary import warnings in preparation for [upcoming Flutter changes](https://github.com/flutter/flutter/pull/106316).
+* Adds missing build params for v4 WebViewWidget interface.
+
+## 1.9.1
+
+* Ignores unnecessary import warnings in preparation for [upcoming Flutter changes](https://github.com/flutter/flutter/pull/104231).
+
+## 1.9.0
+
+* Adds the first iteration of the v4 webview_flutter interface implementation.
+* Removes unnecessary imports.
+
+## 1.8.2
+
+* Migrates from `ui.hash*` to `Object.hash*`.
+* Updates minimum Flutter version to 2.5.0.
+
 ## 1.8.1+2
 
 * fix flutter analyze issues
@@ -5,7 +42,6 @@
 ## 1.8.1+1
 
 * add geolocation for android
-
 
 ## 1.8.1
 

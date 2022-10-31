@@ -2,11 +2,11 @@ name: webview_pro_android
 description: A Flutter plugin that provides a WebView widget on Android.
 repository: https://github.com/wenzhiming/flutter-plugins/tree/dev/packages/webview_flutter/webview_flutter_android
 issue_tracker: https://github.com/wenzhiming/flutter-plugins/issues
-version: 2.8.3+3
+version: 2.10.4+1
 
 environment:
   sdk: ">=2.14.0 <3.0.0"
-  flutter: ">=2.5.0"
+  flutter: ">=3.0.0"
 
 flutter:
   plugin:
@@ -28,6 +28,5 @@ dev_dependencies:
     sdk: flutter
   flutter_test:
     sdk: flutter
-  mockito: ^5.0.16
-  pedantic: ^1.10.0
-  pigeon: 1.0.9
+  mockito: ^5.2.0
+  pigeon: ^4.0.2
