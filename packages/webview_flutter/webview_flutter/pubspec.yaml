@@ -12,9 +12,9 @@ flutter:
   plugin:
     platforms:
       android:
-        default_package: webview_flutter_android
+        default_package: webview_pro_android
       ios:
-        default_package: webview_flutter_wkwebview
+        default_package: webview_pro_wkwebview
 
 dependencies:
   flutter:
