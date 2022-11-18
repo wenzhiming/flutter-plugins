@@ -1,10 +1,16 @@
+<?code-excerpt path-base="excerpts/packages/video_player_example"?>
+
 # Video Player plugin for Flutter
 
 [![pub package](https://img.shields.io/pub/v/video_player.svg)](https://pub.dev/packages/video_player)
 
 A Flutter plugin for iOS, Android and Web for playing back video on a Widget surface.
 
-![The example app running in iOS](https://github.com/flutter/plugins/blob/master/packages/video_player/video_player/doc/demo_ipod.gif?raw=true)
+|             | Android | iOS  | Web   |
+|-------------|---------|------|-------|
+| **Support** | SDK 16+ | 9.0+ | Any\* |
+
+![The example app running in iOS](https://github.com/flutter/plugins/blob/main/packages/video_player/video_player/doc/demo_ipod.gif?raw=true)
 
 ## Installation
 
@@ -31,7 +37,7 @@ Android Manifest file, located in `<project root>/android/app/src/main/AndroidMa
 
 > The Web platform does **not** suppport `dart:io`, so avoid using the `VideoPlayerController.file` constructor for the plugin. Using the constructor attempts to create a `VideoPlayerController.file` that will throw an `UnimplementedError`.
 
-Different web browsers may have different video-playback capabilities (supported formats, autoplay...). Check [package:video_player_web](https://pub.dev/packages/video_player_web) for more web-specific information.
+\* Different web browsers may have different video-playback capabilities (supported formats, autoplay...). Check [package:video_player_web](https://pub.dev/packages/video_player_web) for more web-specific information.
 
 The `VideoPlayerOptions.mixWithOthers` option can't be implemented in web, at least at the moment. If you use this option in web it will be silently ignored.
 
@@ -46,19 +52,23 @@ The `VideoPlayerOptions.mixWithOthers` option can't be implemented in web, at le
 
 ## Example
 
+<?code-excerpt "basic.dart (basic-example)"?>
 ```dart
-import 'package:video_player/video_player.dart';
 import 'package:flutter/material.dart';
+import 'package:video_player/video_player.dart';
 
-void main() => runApp(VideoApp());
+void main() => runApp(const VideoApp());
 
+/// Stateful widget to fetch and then display video content.
 class VideoApp extends StatefulWidget {
+  const VideoApp({Key? key}) : super(key: key);
+
   @override
   _VideoAppState createState() => _VideoAppState();
 }
 
 class _VideoAppState extends State<VideoApp> {
-  VideoPlayerController _controller;
+  late VideoPlayerController _controller;
 
   @override
   void initState() {
@@ -119,7 +129,7 @@ This is not complete as of now. You can contribute to this section by [opening a
 
 You can set the playback speed on your `_controller` (instance of `VideoPlayerController`) by
 calling `_controller.setPlaybackSpeed`. `setPlaybackSpeed` takes a `double` speed value indicating
-the rate of playback for your video.  
+the rate of playback for your video.
 For example, when given a value of `2.0`, your video will play at 2x the regular playback speed
 and so on.
 

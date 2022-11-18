@@ -8,7 +8,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  
+  flutter_driver:
+    sdk: flutter
   path_provider: ^2.0.6
   
   webview_pro_android:
@@ -18,16 +19,14 @@ dependencies:
     # The example app is bundled with the plugin so we use a path dependency on
     # the parent directory to use the current plugin's version.
     path: ../
+  webview_flutter_platform_interface: ^1.8.0
 
 dev_dependencies:
-  espresso: ^0.1.0+2
-  flutter_driver:
-    sdk: flutter
+  espresso: ^0.2.0
   flutter_test:
     sdk: flutter
   integration_test:
     sdk: flutter
-  pedantic: ^1.10.0
 
 flutter:
   uses-material-design: true

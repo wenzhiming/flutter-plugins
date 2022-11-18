@@ -11,6 +11,7 @@ class SamplePluginPlatform extends PlatformInterface {
 
   static final Object _token = Object();
 
+  // ignore: avoid_setters_without_getters
   static set instance(SamplePluginPlatform instance) {
     PlatformInterface.verify(instance, _token);
     // A real implementation would set a static instance field here.
@@ -19,6 +20,12 @@ class SamplePluginPlatform extends PlatformInterface {
 
 class ImplementsSamplePluginPlatform extends Mock
     implements SamplePluginPlatform {}
+
+class ImplementsSamplePluginPlatformUsingNoSuchMethod
+    implements SamplePluginPlatform {
+  @override
+  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
+}
 
 class ImplementsSamplePluginPlatformUsingMockPlatformInterfaceMixin extends Mock
     with MockPlatformInterfaceMixin
@@ -35,6 +42,7 @@ class ConstTokenPluginPlatform extends PlatformInterface {
 
   static const Object _token = Object(); // invalid
 
+  // ignore: avoid_setters_without_getters
   static set instance(ConstTokenPluginPlatform instance) {
     PlatformInterface.verify(instance, _token);
   }
@@ -47,6 +55,7 @@ class VerifyTokenPluginPlatform extends PlatformInterface {
 
   static final Object _token = Object();
 
+  // ignore: avoid_setters_without_getters
   static set instance(VerifyTokenPluginPlatform instance) {
     PlatformInterface.verifyToken(instance, _token);
     // A real implementation would set a static instance field here.
@@ -68,6 +77,7 @@ class ConstVerifyTokenPluginPlatform extends PlatformInterface {
 
   static const Object _token = Object(); // invalid
 
+  // ignore: avoid_setters_without_getters
   static set instance(ConstVerifyTokenPluginPlatform instance) {
     PlatformInterface.verifyToken(instance, _token);
   }
@@ -91,6 +101,13 @@ void main() {
     test('prevents implementation with `implements`', () {
       expect(() {
         SamplePluginPlatform.instance = ImplementsSamplePluginPlatform();
+      }, throwsA(isA<AssertionError>()));
+    });
+
+    test('prevents implmentation with `implements` and `noSuchMethod`', () {
+      expect(() {
+        SamplePluginPlatform.instance =
+            ImplementsSamplePluginPlatformUsingNoSuchMethod();
       }, throwsA(isA<AssertionError>()));
     });
 

@@ -7,11 +7,11 @@ import 'dart:html' as html;
 import 'dart:ui';
 
 import 'package:camera_platform_interface/camera_platform_interface.dart';
-import 'package:camera_web/src/camera_service.dart';
-import 'package:camera_web/src/types/types.dart';
 import 'package:flutter/foundation.dart';
 
+import 'camera_service.dart';
 import 'shims/dart_ui.dart' as ui;
+import 'types/types.dart';
 
 String _getViewType(int cameraId) => 'plugins.flutter.io/camera_$cameraId';
 
@@ -138,6 +138,9 @@ class Camera {
 
   /// A builder to merge a list of blobs into a single blob.
   @visibleForTesting
+  // TODO(stuartmorgan): Remove this 'ignore' once we don't analyze using 2.10
+  // any more. It's a false positive that is fixed in later versions.
+  // ignore: prefer_function_declarations_over_variables
   html.Blob Function(List<html.Blob> blobs, String type) blobBuilder =
       (List<html.Blob> blobs, String type) => html.Blob(blobs, type);
 

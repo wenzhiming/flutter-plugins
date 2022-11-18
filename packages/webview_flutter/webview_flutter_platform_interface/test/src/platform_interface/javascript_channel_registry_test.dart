@@ -8,35 +8,35 @@ import 'package:webview_pro_platform_interface/src/types/javascript_channel.dart
 import 'package:webview_pro_platform_interface/src/types/types.dart';
 
 void main() {
-  final Map<String, String> _log = <String, String>{};
-  final Set<JavascriptChannel> _channels = <JavascriptChannel>{
+  final Map<String, String> log = <String, String>{};
+  final Set<JavascriptChannel> channels = <JavascriptChannel>{
     JavascriptChannel(
       name: 'js_channel_1',
       onMessageReceived: (JavascriptMessage message) =>
-          _log['js_channel_1'] = message.message,
+          log['js_channel_1'] = message.message,
     ),
     JavascriptChannel(
       name: 'js_channel_2',
       onMessageReceived: (JavascriptMessage message) =>
-          _log['js_channel_2'] = message.message,
+          log['js_channel_2'] = message.message,
     ),
     JavascriptChannel(
       name: 'js_channel_3',
       onMessageReceived: (JavascriptMessage message) =>
-          _log['js_channel_3'] = message.message,
+          log['js_channel_3'] = message.message,
     ),
   };
 
   tearDown(() {
-    _log.clear();
+    log.clear();
   });
 
   test('ctor should initialize with channels.', () {
     final JavascriptChannelRegistry registry =
-        JavascriptChannelRegistry(_channels);
+        JavascriptChannelRegistry(channels);
 
     expect(registry.channels.length, 3);
-    for (final JavascriptChannel channel in _channels) {
+    for (final JavascriptChannel channel in channels) {
       expect(registry.channels[channel.name], channel);
     }
   });
@@ -44,7 +44,7 @@ void main() {
   test('onJavascriptChannelMessage should forward message on correct channel.',
       () {
     final JavascriptChannelRegistry registry =
-        JavascriptChannelRegistry(_channels);
+        JavascriptChannelRegistry(channels);
 
     registry.onJavascriptChannelMessage(
       'js_channel_2',
@@ -52,7 +52,7 @@ void main() {
     );
 
     expect(
-        _log,
+        log,
         containsPair(
           'js_channel_2',
           'test message on channel 2',
@@ -63,7 +63,7 @@ void main() {
       'onJavascriptChannelMessage should throw ArgumentError when message arrives on non-existing channel.',
       () {
     final JavascriptChannelRegistry registry =
-        JavascriptChannelRegistry(_channels);
+        JavascriptChannelRegistry(channels);
 
     expect(
         () => registry.onJavascriptChannelMessage(
@@ -80,7 +80,7 @@ void main() {
       'updateJavascriptChannelsFromSet should clear all channels when null is supplied.',
       () {
     final JavascriptChannelRegistry registry =
-        JavascriptChannelRegistry(_channels);
+        JavascriptChannelRegistry(channels);
 
     expect(registry.channels.length, 3);
 
@@ -92,7 +92,7 @@ void main() {
   test('updateJavascriptChannelsFromSet should update registry with new set.',
       () {
     final JavascriptChannelRegistry registry =
-        JavascriptChannelRegistry(_channels);
+        JavascriptChannelRegistry(channels);
 
     expect(registry.channels.length, 3);
 
@@ -100,12 +100,12 @@ void main() {
       JavascriptChannel(
         name: 'new_js_channel_1',
         onMessageReceived: (JavascriptMessage message) =>
-            _log['new_js_channel_1'] = message.message,
+            log['new_js_channel_1'] = message.message,
       ),
       JavascriptChannel(
         name: 'new_js_channel_2',
         onMessageReceived: (JavascriptMessage message) =>
-            _log['new_js_channel_2'] = message.message,
+            log['new_js_channel_2'] = message.message,
       ),
     };
 

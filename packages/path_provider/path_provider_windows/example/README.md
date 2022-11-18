@@ -1,8 +1,9 @@
-# path_provider_windows_example
+# Platform Implementation Test App
 
-Demonstrates how to use the path_provider_windows plugin.
+This is a test app for manual testing and automated integration testing
+of this platform implementation. It is not intended to demonstrate actual use of
+this package, since the intent is that plugin clients use the app-facing
+package.
 
-## Getting Started
-
-For help getting started with Flutter, view our online
-[documentation](https://flutter.dev/).
+Unless you are making changes to this implementation package, this example is
+very unlikely to be relevant.
